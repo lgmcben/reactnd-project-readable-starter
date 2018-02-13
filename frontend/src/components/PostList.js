@@ -4,7 +4,7 @@ class PostList extends Component {
 
     componentDidMount() {
         // Get post list
-      const postListUrl = `http://localhost:3001/categories`;
+      const postListUrl = `http://localhost:3001/posts`;
       fetch(postListUrl, {
         method: 'GET',
         headers: { 'Authorization': 'benkitti' }
