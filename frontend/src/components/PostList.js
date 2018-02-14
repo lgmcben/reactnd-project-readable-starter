@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
+import fetchPostList from '../utils/api';
 
 class PostList extends Component {
 
     componentDidMount() {
-        // Get post list
-      const postListUrl = `http://localhost:3001/posts`;
-      fetch(postListUrl, {
-        method: 'GET',
-        headers: { 'Authorization': 'benkitti' }
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-          console.log(responseJson);
-      })
+      fetchPostList().then(postList => {console.log(postList)} );
     }
 
     render() {
