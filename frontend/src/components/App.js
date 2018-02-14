@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import './App.css';
-import logo from './logo.svg';
-import PostList from './components/PostList';
+import '../App.css';
+import PostList from './PostList';
 
 class App extends Component {
   render() {
