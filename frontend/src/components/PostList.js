@@ -24,7 +24,7 @@ function mapStateToProps (state, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        doLoadAllPost: (data) => dispatch(loadAllPosts(data))
+        doLoadAllPost: () => dispatch(loadAllPosts())
     }
 }
 
