@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import fetchPostList from '../utils/api';
+import { connect } from 'react-redux';
+import { loadAllPosts } from '../actions'
 
 class PostList extends Component {
 
     componentDidMount() {
-      fetchPostList().then(postList => {console.log(postList)} );
+        this.props.doLoadAllPost();
     }
 
     render() {
+        console.log('Props', this.props);
         return (
             <h1>Post list</h1>
         );
     }
 }
 
-export default PostList;
+function mapStateToProps (state, ownProps) {
+    return {
+        postList: state.postList
+    }
+}
+
+function mapDispatchToProps (dispatch) {
+    return {
+        doLoadAllPost: (data) => dispatch(loadAllPosts(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
