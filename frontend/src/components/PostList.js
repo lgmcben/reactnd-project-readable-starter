@@ -22,9 +22,9 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps ({posts, comments}, ownProps) {
     return {
-        postList: state.postList
+        postList: posts.postList
     }
 }
 

@@ -1,13 +1,26 @@
 import {
     LOAD_ALL_POSTS
-} from '../actions'
+} from '../actions';
+import { combineReducers } from 'redux';
 
 const initialState = {
     postList: [],
     test: 'test value'
 }
 
-function loadAllPostReducer (state = initialState, action) {
+function comments (state = {}, action) {
+    switch (action.type) {
+        case LOAD_ALL_POSTS:
+            return {
+                ...state,
+                comment: 'test comment state'
+            };
+        default:
+            return state;
+    }
+}
+
+function posts (state = initialState, action) {
     switch (action.type) {
         case LOAD_ALL_POSTS:
             //TODO: Temporary api call for testing
@@ -21,4 +34,7 @@ function loadAllPostReducer (state = initialState, action) {
     }
 }
 
-export default loadAllPostReducer;
+export default combineReducers({
+    comments,
+    posts
+});
