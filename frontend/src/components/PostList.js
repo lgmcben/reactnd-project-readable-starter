@@ -2,11 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadAllPosts } from '../actions'
 import fetchPostList from '../utils/api';
+import Modal from 'react-modal'
+import Loading from 'react-loading'
 
 class PostList extends Component {
 
-    componentDidMount() {
+    state = {
+        newPostModalOpen: false
+    }
 
+    openNewPostModal = () => {
+        this.setState({
+            newPostModalOpen: true
+        });
+    }
+
+    closeNewPostModal = () => {
+        this.setState({
+            newPostModalOpen: false
+        });
+    }
+
+    componentDidMount() {
         fetchPostList().then(postList => {
             console.log('fetched postList = ', postList);
             this.props.doLoadAllPost(postList);
@@ -15,9 +32,13 @@ class PostList extends Component {
 
     render() {
         console.log('Props', this.props);
-        return (
-            this.props.postList.map(post => <h1 key={post.id}>{post.title}</h1>)
 
+        const { newPostModalOpen } = this.state;
+        return (
+            <div>
+                {this.props.postList.map(post => <p key={post.id}>{post.title}</p>)}
+                <button onClick={() => this.openNewPostModal()}>New post</button>
+            </div>
         );
     }
 }
