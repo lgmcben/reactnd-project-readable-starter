@@ -24,6 +24,7 @@ class PostList extends Component {
     }
 
     componentDidMount() {
+        Modal.setAppElement('body');
         fetchPostList().then(postList => {
             console.log('fetched postList = ', postList);
             this.props.doLoadAllPost(postList);
@@ -38,6 +39,14 @@ class PostList extends Component {
             <div>
                 {this.props.postList.map(post => <p key={post.id}>{post.title}</p>)}
                 <button onClick={() => this.openNewPostModal()}>New post</button>
+
+                <Modal
+                    isOpen={newPostModalOpen}
+                    onRequestClose={this.closeNewPostModal}
+                    contentLabel='Modal'
+                >
+
+                </Modal>
             </div>
         );
     }
