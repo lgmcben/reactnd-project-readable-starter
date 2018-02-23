@@ -3,7 +3,7 @@ function fetchPostList () {
     return fetch(postListUrl, {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'kittiben',
+                    'Authorization': 'benkittitoken',
                     'Content-Type': 'application/json'
                 },
            })
@@ -25,7 +25,7 @@ function submitNewPost () {
     return fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'kittiben',
+                    'Authorization': 'benkittitoken',
                     'Content-Type': 'application/json'
                 },
                 body: postBody
