@@ -31,10 +31,13 @@ function submitNewPost () {
                 body: postBody
            })
            .then((response) => {
-                console.log(response)
-                return response.json()
+                console.log(response);
+                return response.json();
             })
-           .then((responseJson) => { console.log(responseJson) });
+           .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+           });
 }
 
 export {

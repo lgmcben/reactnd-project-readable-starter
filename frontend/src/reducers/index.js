@@ -1,11 +1,11 @@
 import {
-    LOAD_ALL_POSTS
+    LOAD_ALL_POSTS,
+    ADD_NEW_POST
 } from '../actions';
 import { combineReducers } from 'redux';
 
 const initialState = {
     postList: [],
-    test: 'test value'
 }
 
 function comments (state = {}, action) {
@@ -23,11 +23,15 @@ function comments (state = {}, action) {
 function posts (state = initialState, action) {
     switch (action.type) {
         case LOAD_ALL_POSTS:
-            //TODO: Temporary api call for testing
             return {
-                //return new loaded post list
                 ...state,
                 postList: action.allPosts
+            };
+        case ADD_NEW_POST:
+            console.log('add new post reducer');
+            return {
+                ...state,
+                postList: [...state.postList, action.newPost]
             };
         default:
             return state;

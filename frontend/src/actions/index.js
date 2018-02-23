@@ -1,5 +1,5 @@
 export const LOAD_ALL_POSTS = 'LOAD_ALL_POSTS';
-export const SUBMIT_NEW_POST = 'SUBMIT_NEW_POST';
+export const ADD_NEW_POST = 'ADD_NEW_POST';
 
 export function loadAllPosts(allPosts) {
     return {
@@ -8,9 +8,9 @@ export function loadAllPosts(allPosts) {
     };
 };
 
-export function submitNewPost(allPosts) {
+export function addNewPost(newPost) {
     return {
-        type: LOAD_ALL_POSTS,
-        allPosts
+        type: ADD_NEW_POST,
+        newPost
     };
 };
