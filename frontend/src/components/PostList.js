@@ -50,36 +50,34 @@ class PostList extends Component {
         const { newPostModalOpen } = this.state;
         return (
             <div>
-                <div>
+                <ul>
                     {this.props.postList.map(post =>
-                        <ul>
-                            <li className='post'>
-                                <p key={post.id}>
-                                    <strong>{post.title}</strong>
-                                </p>
-                                <p>
-                                    <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
-                                </p>
+                        <li className='post' key={post.id}>
+                            <p>
+                                <strong>{post.title}</strong>
+                            </p>
+                            <p>
+                                <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
+                            </p>
 
-                                <button className='button-control'>
-                                    + Upvote
-                                </button>
+                            <button className='button-control'>
+                                + Upvote
+                            </button>
 
-                                <button className='button-control'>
-                                    - Downvote
-                                </button>
+                            <button className='button-control'>
+                                - Downvote
+                            </button>
 
-                                <button className='button-control'>
-                                    Edit
-                                </button>
+                            <button className='button-control'>
+                                Edit
+                            </button>
 
-                                <button className='button-control'>
-                                    Delete
-                                </button>
-                            </li>
-                        </ul>
+                            <button className='button-control'>
+                                Delete
+                            </button>
+                        </li>
                     )}
-                </div>
+                </ul>
                 <button onClick={() => this.openNewPostModal()}>New post</button>
 
                 <Modal
