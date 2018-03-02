@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAllPosts, addNewPost } from '../actions'
+import { fetchAllPosts, addNewPost } from '../actions'
 import { fetchPostList, submitNewPost } from '../utils/api';
 import Modal from 'react-modal'
 import Loading from 'react-loading'
@@ -31,7 +31,7 @@ class PostList extends Component {
         submitNewPost()
         .then(newPost => {
             console.log('newPost', newPost)
-            this.props.doAddNewPost(newPost);
+            this.props.dispatchAddNewPost(newPost);
         });
         this.closeNewPostModal();
 
@@ -39,10 +39,8 @@ class PostList extends Component {
 
     componentDidMount() {
         Modal.setAppElement('body');
-        fetchPostList().then(postList => {
-            console.log('fetched postList = ', postList);
-            this.props.doLoadAllPost(postList);
-        });
+        this.props.dispatchLoadAllPost();
+
     }
 
     render() {
@@ -112,8 +110,8 @@ function mapStateToProps ({posts, comments}, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        doLoadAllPost: (data) => dispatch(loadAllPosts(data)),
-        doAddNewPost: (data) => dispatch(addNewPost(data))
+        dispatchLoadAllPost: (data) => dispatch(fetchAllPosts(data)),
+        dispatchAddNewPost: (data) => dispatch(addNewPost(data))
     }
 }
 
