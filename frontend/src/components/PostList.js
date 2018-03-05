@@ -8,7 +8,8 @@ class PostList extends Component {
 
     state = {
         newPostModalOpen: false,
-        newPostTitle: ''
+        newPostTitle: '',
+        newPostBody: ''
     }
 
     openNewPostModal = () => {
@@ -28,7 +29,7 @@ class PostList extends Component {
         if (!this.state.newPostTitle) {
             return
         }
-        this.props.dispatchAddNewPost(this.state.newPostTitle);
+        this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody});
         this.closeNewPostModal();
 
     }
@@ -49,6 +50,9 @@ class PostList extends Component {
                         <li className='post' key={post.id}>
                             <p>
                                 <strong>{post.title}</strong>
+                            </p>
+                            <p>
+                                {post.body}
                             </p>
                             <p>
                                 <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
@@ -86,6 +90,12 @@ class PostList extends Component {
                             placeholder='Title...'
                             value={this.state.newPostTitle}
                             onChange={(event) => this.setState({newPostTitle: event.target.value})}
+                        />
+                        <input
+                            type='text'
+                            placeholder='Body...'
+                            value={this.state.newPostBody}
+                            onChange={(event) => this.setState({newPostBody: event.target.value})}
                         />
                         <button onClick={this._submitNewPost}>
                             Submit
