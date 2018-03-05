@@ -7,7 +7,8 @@ import Modal from 'react-modal'
 class PostList extends Component {
 
     state = {
-        newPostModalOpen: false
+        newPostModalOpen: false,
+        newPostTitle: ''
     }
 
     openNewPostModal = () => {
@@ -23,11 +24,11 @@ class PostList extends Component {
     }
 
     _submitNewPost = (event) => {
-        if (!this.input.value) {
+        event.preventDefault();
+        if (!this.state.newPostTitle) {
             return
         }
-        event.preventDefault();
-        this.props.dispatchAddNewPost(this.input.value);
+        this.props.dispatchAddNewPost(this.state.newPostTitle);
         this.closeNewPostModal();
 
     }
@@ -83,7 +84,8 @@ class PostList extends Component {
                         <input
                             type='text'
                             placeholder='Title...'
-                            ref={(input) => this.input = input}
+                            value={this.state.newPostTitle}
+                            onChange={(event) => this.setState({newPostTitle: event.target.value})}
                         />
                         <button onClick={this._submitNewPost}>
                             Submit
