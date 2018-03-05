@@ -11,13 +11,13 @@ function fetchPostList () {
            .then((postList) => postList);
 }
 
-function submitNewPost () {
+function submitNewPost (title) {
     const uuidv1 = require('uuid/v1');
     const url = 'http://localhost:3001/posts';
     let postBody = JSON.stringify({
        id: uuidv1(),
        timestamp: Date.now(),
-       title: 'testTitle',
+       title: title,
        body: 'testBody',
        author: 'ben',
        category: 'udacity'

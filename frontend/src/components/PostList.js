@@ -28,7 +28,7 @@ class PostList extends Component {
             return
         }
         event.preventDefault();
-        submitNewPost()
+        submitNewPost(this.input.value)
         .then(newPost => {
             console.log('newPost', newPost)
             this.props.dispatchAddNewPost(newPost);
