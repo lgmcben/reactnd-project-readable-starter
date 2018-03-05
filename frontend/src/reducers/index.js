@@ -1,6 +1,6 @@
 import {
     LOAD_ALL_POSTS,
-    ADD_NEW_POST
+    ADD_NEW_POST_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -27,7 +27,7 @@ function posts (state = initialState, action) {
                 ...state,
                 postList: action.allPosts
             };
-        case ADD_NEW_POST:
+        case ADD_NEW_POST_SUCCESS:
             console.log('add new post reducer');
             return {
                 ...state,

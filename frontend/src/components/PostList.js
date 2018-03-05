@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPosts, addNewPost } from '../actions'
-import { fetchPostList, submitNewPost } from '../utils/api';
+import { fetchAllPosts, addNewPostRequest } from '../actions'
 import Modal from 'react-modal'
-import Loading from 'react-loading'
+//import Loading from 'react-loading'
 
 class PostList extends Component {
 
@@ -28,11 +27,7 @@ class PostList extends Component {
             return
         }
         event.preventDefault();
-        submitNewPost(this.input.value)
-        .then(newPost => {
-            console.log('newPost', newPost)
-            this.props.dispatchAddNewPost(newPost);
-        });
+        this.props.dispatchAddNewPost(this.input.value);
         this.closeNewPostModal();
 
     }
@@ -111,7 +106,7 @@ function mapStateToProps ({posts, comments}, ownProps) {
 function mapDispatchToProps (dispatch) {
     return {
         dispatchLoadAllPost: (data) => dispatch(fetchAllPosts(data)),
-        dispatchAddNewPost: (data) => dispatch(addNewPost(data))
+        dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data))
     }
 }
 
