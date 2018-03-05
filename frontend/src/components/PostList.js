@@ -9,7 +9,8 @@ class PostList extends Component {
     state = {
         newPostModalOpen: false,
         newPostTitle: '',
-        newPostBody: ''
+        newPostBody: '',
+        newPostAuthor: ''
     }
 
     openNewPostModal = () => {
@@ -20,7 +21,10 @@ class PostList extends Component {
 
     closeNewPostModal = () => {
         this.setState({
-            newPostModalOpen: false
+            newPostModalOpen: false,
+            newPostTitle: '',
+            newPostBody: '',
+            newPostAuthor: ''
         });
     }
 
@@ -29,9 +33,8 @@ class PostList extends Component {
         if (!this.state.newPostTitle) {
             return
         }
-        this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody});
+        this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor});
         this.closeNewPostModal();
-
     }
 
     componentDidMount() {
@@ -91,11 +94,21 @@ class PostList extends Component {
                             value={this.state.newPostTitle}
                             onChange={(event) => this.setState({newPostTitle: event.target.value})}
                         />
+                        <br/>
+                        <br/>
                         <input
                             type='text'
                             placeholder='Body...'
                             value={this.state.newPostBody}
                             onChange={(event) => this.setState({newPostBody: event.target.value})}
+                        />
+                        <br/>
+                        <br/>
+                        <input
+                            type='text'
+                            placeholder='Author...'
+                            value={this.state.newPostAuthor}
+                            onChange={(event) => this.setState({newPostAuthor: event.target.value})}
                         />
                         <button onClick={this._submitNewPost}>
                             Submit

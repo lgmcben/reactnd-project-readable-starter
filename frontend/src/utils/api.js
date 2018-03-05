@@ -11,7 +11,7 @@ function fetchPostList () {
            .then((postList) => postList);
 }
 
-function submitNewPost ({title = '', body = ''} = {}) {
+function submitNewPost ({title = '', body = '', author = ''} = {}) {
     const uuidv1 = require('uuid/v1');
     const url = 'http://localhost:3001/posts';
     let postBody = JSON.stringify({
@@ -19,7 +19,7 @@ function submitNewPost ({title = '', body = ''} = {}) {
        timestamp: Date.now(),
        title: title,
        body: body,
-       author: 'ben',
+       author: author,
        category: 'udacity'
      })
     return fetch(url, {
