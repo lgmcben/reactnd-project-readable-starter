@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPostsRequest, addNewPostRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest } from '../actions'
 import Modal from 'react-modal'
 //import Loading from 'react-loading'
 
@@ -43,7 +43,7 @@ class PostList extends Component {
     componentDidMount() {
         Modal.setAppElement('body');
         this.props.dispatchLoadAllPost();
-
+        this.props.dispatchFetchCategories();
     }
 
     render() {
@@ -117,9 +117,10 @@ class PostList extends Component {
                         <br/>
                         <select value={this.state.newPostCategory} onChange={(event) => this.setState({newPostCategory: event.target.value})}>
                             <option default>Select category</option>
-                            <option value="react">React</option>
-                            <option value="redux">Redux</option>
-                            <option value="udacity">Udacity</option>
+
+                            {this.props.categoryList && this.props.categoryList.map(category =>
+                                <option key={category.path} value={category.name}>{category.name}</option>
+                            )}
                         </select>
                         <button onClick={this._submitNewPost}>
                             Submit
@@ -133,16 +134,18 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps ({posts, comments}, ownProps) {
+function mapStateToProps ({post, comment, category}, ownProps) {
     return {
-        postList: posts.postList
+        postList: post.postList,
+        categoryList: category.categories
     }
 }
 
 function mapDispatchToProps (dispatch) {
     return {
         dispatchLoadAllPost: (data) => dispatch(fetchAllPostsRequest(data)),
-        dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data))
+        dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data)),
+        dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data))
     }
 }
 

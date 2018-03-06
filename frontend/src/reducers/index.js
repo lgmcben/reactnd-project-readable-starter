@@ -1,6 +1,7 @@
 import {
     LOAD_ALL_POSTS_SUCCESS,
-    ADD_NEW_POST_SUCCESS
+    ADD_NEW_POST_SUCCESS,
+    FETCH_CATEGORIES_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -8,7 +9,7 @@ const initialState = {
     postList: [],
 }
 
-function comments (state = {}, action) {
+function comment (state = {}, action) {
     switch (action.type) {
         case LOAD_ALL_POSTS_SUCCESS:
             return {
@@ -20,7 +21,7 @@ function comments (state = {}, action) {
     }
 }
 
-function posts (state = initialState, action) {
+function post (state = initialState, action) {
     switch (action.type) {
         case LOAD_ALL_POSTS_SUCCESS:
             return {
@@ -38,7 +39,20 @@ function posts (state = initialState, action) {
     }
 }
 
+function category (state = {}, action) {
+    switch (action.type) {
+        case FETCH_CATEGORIES_SUCCESS:
+            return {
+                ...state,
+                categories: action.categories
+            };
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
-    comments,
-    posts
+    comment,
+    post,
+    category
 });

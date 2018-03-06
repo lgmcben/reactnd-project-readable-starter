@@ -11,6 +11,19 @@ function fetchPostList () {
            .then((postList) => postList);
 }
 
+function fetchCategories () {
+    const postListUrl = `http://localhost:3001/categories`;
+    return fetch(postListUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson.categories);
+}
+
 function submitNewPost ({title = '', body = '', author = '', category = ''} = {}) {
     const uuidv1 = require('uuid/v1');
     const url = 'http://localhost:3001/posts';
@@ -42,5 +55,6 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
 
 export {
     fetchPostList,
-    submitNewPost
+    submitNewPost,
+    fetchCategories
 }
