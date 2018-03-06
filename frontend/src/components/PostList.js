@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPosts, addNewPostRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest } from '../actions'
 import Modal from 'react-modal'
 //import Loading from 'react-loading'
 
@@ -130,7 +130,7 @@ function mapStateToProps ({posts, comments}, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        dispatchLoadAllPost: (data) => dispatch(fetchAllPosts(data)),
+        dispatchLoadAllPost: (data) => dispatch(fetchAllPostsRequest(data)),
         dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data))
     }
 }

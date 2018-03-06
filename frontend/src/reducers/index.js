@@ -1,5 +1,5 @@
 import {
-    LOAD_ALL_POSTS,
+    LOAD_ALL_POSTS_SUCCESS,
     ADD_NEW_POST_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
@@ -10,7 +10,7 @@ const initialState = {
 
 function comments (state = {}, action) {
     switch (action.type) {
-        case LOAD_ALL_POSTS:
+        case LOAD_ALL_POSTS_SUCCESS:
             return {
                 ...state,
                 comment: 'test comment state'
@@ -22,7 +22,7 @@ function comments (state = {}, action) {
 
 function posts (state = initialState, action) {
     switch (action.type) {
-        case LOAD_ALL_POSTS:
+        case LOAD_ALL_POSTS_SUCCESS:
             return {
                 ...state,
                 postList: action.allPosts

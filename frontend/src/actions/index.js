@@ -1,19 +1,19 @@
 import * as PostAPIUtil from '../utils/api';
 
 
-export const LOAD_ALL_POSTS = 'LOAD_ALL_POSTS';
+export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 
-export const receiveAllPosts = allPosts => (
+export const receiveAllPostsSuccess = allPosts => (
     {
-        type: LOAD_ALL_POSTS,
+        type: LOAD_ALL_POSTS_SUCCESS,
         allPosts
     }
 );
 
-export const fetchAllPosts = () => dispatch => (
+export const fetchAllPostsRequest = () => dispatch => (
     PostAPIUtil.fetchPostList()
-               .then(allPosts => dispatch(receiveAllPosts(allPosts)))
+               .then(allPosts => dispatch(receiveAllPostsSuccess(allPosts)))
 );
 
 export const addNewPostSuccess = (newPost) => (
