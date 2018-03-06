@@ -10,7 +10,8 @@ class PostList extends Component {
         newPostModalOpen: false,
         newPostTitle: '',
         newPostBody: '',
-        newPostAuthor: ''
+        newPostAuthor: '',
+        newPostCategory: ''
     }
 
     openNewPostModal = () => {
@@ -24,7 +25,8 @@ class PostList extends Component {
             newPostModalOpen: false,
             newPostTitle: '',
             newPostBody: '',
-            newPostAuthor: ''
+            newPostAuthor: '',
+            newPostCategory: ''
         });
     }
 
@@ -33,7 +35,8 @@ class PostList extends Component {
         if (!this.state.newPostTitle) {
             return
         }
-        this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor});
+        console.log('selected category', this.state.newPostCategory);
+        this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
         this.closeNewPostModal();
     }
 
@@ -110,6 +113,14 @@ class PostList extends Component {
                             value={this.state.newPostAuthor}
                             onChange={(event) => this.setState({newPostAuthor: event.target.value})}
                         />
+                        <br/>
+                        <br/>
+                        <select value={this.state.newPostCategory} onChange={(event) => this.setState({newPostCategory: event.target.value})}>
+                            <option default>Select category</option>
+                            <option value="react">React</option>
+                            <option value="redux">Redux</option>
+                            <option value="udacity">Udacity</option>
+                        </select>
                         <button onClick={this._submitNewPost}>
                             Submit
                         </button>
