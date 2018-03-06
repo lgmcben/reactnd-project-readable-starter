@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest } from '../actions'
 import Modal from 'react-modal'
+
+import * as PostAPIUtil from '../utils/api';
 //import Loading from 'react-loading'
+
 
 class PostList extends Component {
 
@@ -44,6 +47,7 @@ class PostList extends Component {
         Modal.setAppElement('body');
         this.props.dispatchLoadAllPost();
         this.props.dispatchFetchCategories();
+        PostAPIUtil.vote({id: '8xf0y6ziyjabvozdd253nd', option: 'upVote'});
     }
 
     render() {

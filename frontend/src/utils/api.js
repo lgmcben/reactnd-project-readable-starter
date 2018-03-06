@@ -27,14 +27,14 @@ function fetchCategories () {
 function submitNewPost ({title = '', body = '', author = '', category = ''} = {}) {
     const uuidv1 = require('uuid/v1');
     const url = 'http://localhost:3001/posts';
-    let postBody = JSON.stringify({
+    const postBody = JSON.stringify({
        id: uuidv1(),
        timestamp: Date.now(),
        title: title,
        body: body,
        author: author,
        category: category
-     })
+    })
     return fetch(url, {
                 method: 'POST',
                 headers: {
@@ -53,8 +53,32 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
            });
 }
 
+function vote ({id = undefined, option = ''} = {}) {
+    const url = `http://localhost:3001/posts/${id}`;
+    const postBody = JSON.stringify({
+       option: option
+    })
+    return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: postBody
+           })
+           .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+           .then((responseJson) => {
+                console.log('vote(), responseJson = ', responseJson);
+                return responseJson;
+           });
+}
+
 export {
     fetchPostList,
     submitNewPost,
-    fetchCategories
+    fetchCategories,
+    vote
 }

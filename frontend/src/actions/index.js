@@ -5,6 +5,7 @@ import * as PostAPIUtil from '../utils/api';
 export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS'
+export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 
 export const fetchAllPostsSuccess = allPosts => (
     {
