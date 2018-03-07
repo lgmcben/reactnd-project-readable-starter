@@ -42,3 +42,17 @@ export const addNewPostRequest = (newPost) => dispatch => (
     PostAPIUtil.submitNewPost(newPost)
                .then(addedPost => dispatch(addNewPostSuccess(addedPost)))
 );
+
+export const upVoteSuccess = post => (
+    {
+        type: VOTE_SUCCESS,
+        post
+    }
+)
+
+export const upVoteRequest = (postId) => dispatch => (
+    PostAPIUtil.vote({id: postId, option: 'upVote'})
+               .then(post => dispatch(upVoteSuccess(post)))
+);
+
+

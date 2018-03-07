@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest } from '../actions'
 import Modal from 'react-modal'
 
 import * as PostAPIUtil from '../utils/api';
@@ -47,7 +47,7 @@ class PostList extends Component {
         Modal.setAppElement('body');
         this.props.dispatchLoadAllPost();
         this.props.dispatchFetchCategories();
-        PostAPIUtil.vote({id: '8xf0y6ziyjabvozdd253nd', option: 'upVote'});
+
     }
 
     render() {
@@ -68,7 +68,7 @@ class PostList extends Component {
                                 <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
                             </p>
 
-                            <button className='button-control'>
+                            <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
                                 + Upvote
                             </button>
 
@@ -149,7 +149,8 @@ function mapDispatchToProps (dispatch) {
     return {
         dispatchLoadAllPost: (data) => dispatch(fetchAllPostsRequest(data)),
         dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data)),
-        dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data))
+        dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data)),
+        dispatchUpvote: (data) => dispatch(upVoteRequest(data))
     }
 }
 
