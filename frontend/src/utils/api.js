@@ -76,9 +76,14 @@ function vote ({id = undefined, option = ''} = {}) {
            });
 }
 
+const UPVOTE = 'upVote';
+const DOWNVOTE = 'downVote';
+
 export {
     fetchPostList,
     submitNewPost,
     fetchCategories,
-    vote
+    vote,
+    UPVOTE,
+    DOWNVOTE
 }

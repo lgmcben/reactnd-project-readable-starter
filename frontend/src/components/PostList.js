@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest } from '../actions'
 import Modal from 'react-modal'
 
 import * as PostAPIUtil from '../utils/api';
@@ -72,7 +72,7 @@ class PostList extends Component {
                                 + Upvote
                             </button>
 
-                            <button className='button-control'>
+                            <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
                                 - Downvote
                             </button>
 
@@ -150,7 +150,8 @@ function mapDispatchToProps (dispatch) {
         dispatchLoadAllPost: (data) => dispatch(fetchAllPostsRequest(data)),
         dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data)),
         dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data)),
-        dispatchUpvote: (data) => dispatch(upVoteRequest(data))
+        dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
+        dispatchDownvote: (data) => dispatch(downVoteRequest(data))
     }
 }
 

@@ -4,7 +4,7 @@ import * as PostAPIUtil from '../utils/api';
 
 export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
-export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS'
+export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 
 export const fetchAllPostsSuccess = allPosts => (
@@ -38,7 +38,7 @@ export const addNewPostSuccess = (newPost) => (
     }
 )
 
-export const addNewPostRequest = (newPost) => dispatch => (
+export const addNewPostRequest = newPost => dispatch => (
     PostAPIUtil.submitNewPost(newPost)
                .then(addedPost => dispatch(addNewPostSuccess(addedPost)))
 );
@@ -50,9 +50,12 @@ export const upVoteSuccess = post => (
     }
 )
 
-export const upVoteRequest = (postId) => dispatch => (
-    PostAPIUtil.vote({id: postId, option: 'upVote'})
+export const upVoteRequest = postId => dispatch => (
+    PostAPIUtil.vote({id: postId, option: PostAPIUtil.UPVOTE})
                .then(post => dispatch(upVoteSuccess(post)))
 );
 
-
+export const downVoteRequest = postId => dispatch => (
+    PostAPIUtil.vote({id: postId, option: PostAPIUtil.DOWNVOTE})
+               .then(post => dispatch(upVoteSuccess(post)))
+)
