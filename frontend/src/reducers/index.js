@@ -1,7 +1,8 @@
 import {
     LOAD_ALL_POSTS_SUCCESS,
     ADD_NEW_POST_SUCCESS,
-    FETCH_CATEGORIES_SUCCESS
+    FETCH_CATEGORIES_SUCCESS,
+    VOTE_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -34,6 +35,11 @@ function post (state = initialState, action) {
                 ...state,
                 postList: [...state.postList, action.newPost]
             };
+        case VOTE_SUCCESS:
+            return {
+                ...state,
+                postList: state.postList.map(post => post.id === action.post.id ? action.post : post)
+            }
         default:
             return state;
     }
