@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest } from '../actions'
 import Modal from 'react-modal'
+import { Link } from 'react-router-dom'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest } from '../actions'
+
 
 import * as PostAPIUtil from '../utils/api';
 //import Loading from 'react-loading'
@@ -55,6 +57,7 @@ class PostList extends Component {
         const { newPostModalOpen } = this.state;
         return (
             <div>
+                <Link to="/catname/postidsard">post detail</Link>
                 <ul>
                     {this.props.postList.map(post =>
                         <li className='post' key={post.id}>
