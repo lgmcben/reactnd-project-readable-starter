@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {  upVoteRequest, downVoteRequest } from '../actions'
+import { Link } from 'react-router-dom'
+import {  upVoteRequest, downVoteRequest, deletePostRequest } from '../actions'
 
 class PostDetail extends Component{
     render() {
@@ -30,13 +31,18 @@ class PostDetail extends Component{
                         Edit
                     </button>
 
-                    <button className='button-control'>
+                    <button className='button-control' onClick={() => this.props.dispatchDeletePost(post.id)}>
                         Delete
                     </button>
                 </div>
             )
-        } else {
-            return <h2>404 page not found</h2>
+        } else if (!post){
+            return (
+                <div>
+                    <p>404 post not found or is deleted</p>
+                    <Link to="/">Back to post list</Link>
+                </div>
+            )
         }
 
     }
@@ -51,7 +57,8 @@ function mapStateToProps ({post, comment, category}, ownProps) {
 function mapDispatchToProps (dispatch) {
     return {
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
-        dispatchDownvote: (data) => dispatch(downVoteRequest(data))
+        dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
+        dispatchDeletePost: (data) => dispatch(deletePostRequest(data))
     }
 }
 
