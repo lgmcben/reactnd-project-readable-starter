@@ -20,9 +20,10 @@ class PostList extends Component {
         newPostCategory: ''
     }
 
-    openEditPostModal = (title, body) => {
+    openEditPostModal = (id, title, body) => {
         this.setState({
             editPostModalOpen: true,
+            editPostId: id,
             editPostTitle: title,
             editPostBody: body
         });
@@ -31,6 +32,7 @@ class PostList extends Component {
     closeEditPostModal = () => {
         this.setState({
             editPostModalOpen: false,
+            editPostId: '',
             editPostTitle: '',
             editPostBody: ''
         });
@@ -67,6 +69,7 @@ class PostList extends Component {
         if (!this.state.editPostTitle) {
             return
         }
+        PostAPIUtil.editPost({id: this.state.editPostId, title: this.state.editPostTitle, body: this.state.editPostBody});
         //console.log('selected category', this.state.newPostCategory);
         //this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
         this.closeEditPostModal();
@@ -105,7 +108,7 @@ class PostList extends Component {
                                     - Downvote
                                 </button>
 
-                                <button className='button-control' onClick={() => this.openEditPostModal(post.title, post.body)}>
+                                <button className='button-control' onClick={() => this.openEditPostModal(post.id, post.title, post.body)}>
                                     Edit
                                 </button>
 

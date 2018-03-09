@@ -80,6 +80,30 @@ function vote ({id = undefined, option = ''} = {}) {
          });
 }
 
+function editPost ({id='', title = '', body = ''} = {}) {
+    const url = `${SERVER_URL}/posts/${id}`;
+    const postBody = JSON.stringify({
+       title: title,
+       body: body
+    })
+    return fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: postBody
+           })
+           .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+           .then((responseJson) => {
+                console.log('editPost(), responseJson = ', responseJson);
+                return responseJson;
+           });
+}
+
 function deletePost (id) {
   const url = `${SERVER_URL}/posts/${id}`;
   return fetch(url, {
@@ -106,6 +130,7 @@ export {
     submitNewPost,
     fetchCategories,
     vote,
+    editPost,
     deletePost,
     UPVOTE,
     DOWNVOTE
