@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest, deletePostRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest } from '../actions'
 
 
 import * as PostAPIUtil from '../utils/api';
@@ -59,7 +59,7 @@ class PostList extends Component {
         if (!this.state.newPostTitle) {
             return
         }
-        console.log('selected category', this.state.newPostCategory);
+        //console.log('selected category', this.state.newPostCategory);
         this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
         this.closeNewPostModal();
     }
@@ -69,9 +69,7 @@ class PostList extends Component {
         if (!this.state.editPostTitle) {
             return
         }
-        PostAPIUtil.editPost({id: this.state.editPostId, title: this.state.editPostTitle, body: this.state.editPostBody});
-        //console.log('selected category', this.state.newPostCategory);
-        //this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
+        this.props.dispatchEditPost({id: this.state.editPostId, title: this.state.editPostTitle, body: this.state.editPostBody});
         this.closeEditPostModal();
     }
 
@@ -222,7 +220,8 @@ function mapDispatchToProps (dispatch) {
         dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data)),
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
         dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
-        dispatchDeletePost: (data) => dispatch(deletePostRequest(data))
+        dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
+        dispatchEditPost: (data) => dispatch(editPostRequest(data))
     }
 }
 

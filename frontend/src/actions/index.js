@@ -7,6 +7,7 @@ export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 
 export const fetchAllPostsSuccess = allPosts => (
     {
@@ -68,7 +69,20 @@ export const deletePostSuccess = (deletedPost) => (
     }
 )
 
+export const editPostSuccess = (editedPost) => (
+    {
+        type: EDIT_POST_SUCCESS,
+        editedPost
+    }
+)
+
 export const deletePostRequest = postId => dispatch => (
     PostAPIUtil.deletePost(postId)
-               .then((deletedPost) => dispatch(deletePostSuccess(deletedPost)))
+               .then(deletedPost => dispatch(deletePostSuccess(deletedPost)))
+)
+
+
+export const editPostRequest = ({id, title, body} = {}) => dispatch => (
+    PostAPIUtil.editPost({id: id, title: title, body: body})
+               .then(editedPost => dispatch(editPostSuccess(editedPost)))
 )
