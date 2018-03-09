@@ -20,9 +20,11 @@ class PostList extends Component {
         newPostCategory: ''
     }
 
-    openEditPostModal = () => {
+    openEditPostModal = (title, body) => {
         this.setState({
-            editPostModalOpen: true
+            editPostModalOpen: true,
+            editPostTitle: title,
+            editPostBody: body
         });
     }
 
@@ -103,7 +105,7 @@ class PostList extends Component {
                                     - Downvote
                                 </button>
 
-                                <button className='button-control' onClick={() => this.openEditPostModal()}>
+                                <button className='button-control' onClick={() => this.openEditPostModal(post.title, post.body)}>
                                     Edit
                                 </button>
 
