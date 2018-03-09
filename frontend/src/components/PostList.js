@@ -13,10 +13,25 @@ class PostList extends Component {
 
     state = {
         newPostModalOpen: false,
+        editPostModalOpen: false,
         newPostTitle: '',
         newPostBody: '',
         newPostAuthor: '',
         newPostCategory: ''
+    }
+
+    openEditPostModal = () => {
+        this.setState({
+            editPostModalOpen: true
+        });
+    }
+
+    closeEditPostModal = () => {
+        this.setState({
+            editPostModalOpen: false,
+            editPostTitle: '',
+            editPostBody: ''
+        });
     }
 
     openNewPostModal = () => {
@@ -45,6 +60,16 @@ class PostList extends Component {
         this.closeNewPostModal();
     }
 
+    _submitEditPost = (event) => {
+        event.preventDefault();
+        if (!this.state.editPostTitle) {
+            return
+        }
+        //console.log('selected category', this.state.newPostCategory);
+        //this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
+        this.closeEditPostModal();
+    }
+
     componentDidMount() {
         Modal.setAppElement('body');
         this.props.dispatchLoadAllPost();
@@ -54,7 +79,7 @@ class PostList extends Component {
 
     render() {
         console.log('Props', this.props);
-        const { newPostModalOpen } = this.state;
+        const { newPostModalOpen, editPostModalOpen } = this.state;
         return (
             <div>
                 <ul>
@@ -78,7 +103,7 @@ class PostList extends Component {
                                     - Downvote
                                 </button>
 
-                                <button className='button-control'>
+                                <button className='button-control' onClick={() => this.openEditPostModal()}>
                                     Edit
                                 </button>
 
@@ -94,7 +119,7 @@ class PostList extends Component {
                 <Modal
                     isOpen={newPostModalOpen}
                     onRequestClose={this.closeNewPostModal}
-                    contentLabel='Modal'
+                    contentLabel='NewPostModal'
                 >
                     <div>
                         <h2>Add new post</h2>
@@ -136,6 +161,43 @@ class PostList extends Component {
                     </div>
 
                 </Modal>
+
+
+
+
+                <Modal
+                    isOpen={editPostModalOpen}
+                    onRequestClose={this.closeEditPostModal}
+                    contentLabel='EditPostModal'
+                >
+                    <div>
+                        <h2>Edit post</h2>
+                        <input
+                            type='text'
+                            placeholder='Title...'
+                            value={this.state.editPostTitle}
+                            onChange={(event) => this.setState({editPostTitle: event.target.value})}
+                        />
+                        <br/>
+                        <br/>
+                        <input
+                            type='text'
+                            placeholder='Body...'
+                            value={this.state.editPostBody}
+                            onChange={(event) => this.setState({editPostBody: event.target.value})}
+                        />
+                        <br/>
+                        <br/>
+                        <button onClick={this._submitEditPost}>
+                            Submit
+                        </button>
+
+                    </div>
+
+                </Modal>
+
+
+
             </div>
         );
     }
