@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 
 class PostDetail extends Component{
     render() {
+        const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
         return(
-            <h1>{this.props.match.params.post_id} </h1>
+            <h1>{post.title}</h1>
+
         )
     }
 }
