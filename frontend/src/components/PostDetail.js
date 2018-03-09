@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {  upVoteRequest, downVoteRequest } from '../actions'
 
 class PostDetail extends Component{
     render() {
@@ -44,7 +45,8 @@ function mapStateToProps ({post, comment, category}, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
-
+        dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
+        dispatchDownvote: (data) => dispatch(downVoteRequest(data))
     }
 }
 
