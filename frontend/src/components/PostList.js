@@ -57,36 +57,36 @@ class PostList extends Component {
         const { newPostModalOpen } = this.state;
         return (
             <div>
-                <Link to="/catname/postidsard">post detail</Link>
                 <ul>
                     {this.props.postList.map(post =>
-                        <li className='post' key={post.id}>
-                            <p>
-                                <strong>{post.title}</strong>
-                            </p>
-                            <p>
-                                {post.body}
-                            </p>
-                            <p>
-                                <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
-                            </p>
 
-                            <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
-                                + Upvote
-                            </button>
+                            <li className='post' key={post.id}>
+                                <p>
+                                    <Link to={`/${post.category}/${post.id}`}>
+                                        <strong>{post.title}</strong>
+                                    </Link>
+                                </p>
+                                <p>
+                                    <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
+                                </p>
 
-                            <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
-                                - Downvote
-                            </button>
+                                <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
+                                    + Upvote
+                                </button>
 
-                            <button className='button-control'>
-                                Edit
-                            </button>
+                                <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
+                                    - Downvote
+                                </button>
 
-                            <button className='button-control'>
-                                Delete
-                            </button>
-                        </li>
+                                <button className='button-control'>
+                                    Edit
+                                </button>
+
+                                <button className='button-control'>
+                                    Delete
+                                </button>
+                            </li>
+
                     )}
                 </ul>
                 <button onClick={() => this.openNewPostModal()}>New post</button>
