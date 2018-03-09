@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest } from '../actions'
+import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest, deletePostRequest } from '../actions'
 
 
 import * as PostAPIUtil from '../utils/api';
@@ -82,7 +82,7 @@ class PostList extends Component {
                                     Edit
                                 </button>
 
-                                <button className='button-control'>
+                                <button className='button-control' onClick={ () => this.props.dispatchDeletePost(post.id) }>
                                     Delete
                                 </button>
                             </li>
@@ -154,7 +154,8 @@ function mapDispatchToProps (dispatch) {
         dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data)),
         dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data)),
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
-        dispatchDownvote: (data) => dispatch(downVoteRequest(data))
+        dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
+        dispatchDeletePost: (data) => dispatch(deletePostRequest(data))
     }
 }
 

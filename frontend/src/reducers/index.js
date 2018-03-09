@@ -2,7 +2,8 @@ import {
     LOAD_ALL_POSTS_SUCCESS,
     ADD_NEW_POST_SUCCESS,
     FETCH_CATEGORIES_SUCCESS,
-    VOTE_SUCCESS
+    VOTE_SUCCESS,
+    DELETE_POST_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -39,6 +40,11 @@ function post (state = initialState, action) {
             return {
                 ...state,
                 postList: state.postList.map(post => post.id === action.post.id ? action.post : post)
+            }
+        case DELETE_POST_SUCCESS:
+            return {
+                ...state,
+                postList: state.postList.filter(post => post.id !== action.deletedPost.id)
             }
         default:
             return state;

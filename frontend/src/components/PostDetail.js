@@ -5,7 +5,7 @@ import {  upVoteRequest, downVoteRequest } from '../actions'
 class PostDetail extends Component{
     render() {
         const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
-        if(post){
+        if(post && !post.deleted){
             return(
                 <div>
                     <p>

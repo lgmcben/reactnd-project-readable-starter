@@ -6,6 +6,7 @@ export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 
 export const fetchAllPostsSuccess = allPosts => (
     {
@@ -58,4 +59,16 @@ export const upVoteRequest = postId => dispatch => (
 export const downVoteRequest = postId => dispatch => (
     PostAPIUtil.vote({id: postId, option: PostAPIUtil.DOWNVOTE})
                .then(post => dispatch(upVoteSuccess(post)))
+)
+
+export const deletePostSuccess = (deletedPost) => (
+    {
+        type: DELETE_POST_SUCCESS,
+        deletedPost
+    }
+)
+
+export const deletePostRequest = postId => dispatch => (
+    PostAPIUtil.deletePost(postId)
+               .then((deletedPost) => dispatch(deletePostSuccess(deletedPost)))
 )
