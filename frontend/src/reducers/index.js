@@ -4,7 +4,9 @@ import {
     FETCH_CATEGORIES_SUCCESS,
     VOTE_SUCCESS,
     DELETE_POST_SUCCESS,
-    EDIT_POST_SUCCESS
+    EDIT_POST_SUCCESS,
+    SORT_BY_SCORE_ASC,
+    SORT_BY_SCORE_DESC
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -52,6 +54,16 @@ function post (state = initialState, action) {
                 ...state,
                 postList: state.postList.map(post => post.id === action.editedPost.id ? action.editedPost : post)
             }
+        case SORT_BY_SCORE_ASC:
+            return {
+                ...state,
+                postList: [...state.postList].sort(compareAsc)
+            }
+        case SORT_BY_SCORE_DESC:
+            return {
+                ...state,
+                postList: [...state.postList].sort(compareDesc)
+            }
         default:
             return state;
     }
@@ -67,6 +79,26 @@ function category (state = {}, action) {
         default:
             return state;
     }
+}
+
+function compareAsc(a, b) {
+    if (a.voteScore < b.voteScore) {
+        return -1;
+    }
+    if (a.voteScore > b.voteScore) {
+        return 1;
+    }
+    return 0;
+}
+
+function compareDesc(a, b) {
+    if (a.voteScore > b.voteScore) {
+        return -1;
+    }
+    if (a.voteScore < b.voteScore) {
+        return 1;
+    }
+    return 0;
 }
 
 export default combineReducers({

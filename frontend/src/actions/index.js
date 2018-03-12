@@ -8,6 +8,8 @@ export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
+export const SORT_BY_SCORE_DESC = "SORT_BY_SCORE_DESC";
 
 export const fetchAllPostsSuccess = allPosts => (
     {
@@ -81,8 +83,19 @@ export const deletePostRequest = postId => dispatch => (
                .then(deletedPost => dispatch(deletePostSuccess(deletedPost)))
 )
 
-
 export const editPostRequest = ({id, title, body} = {}) => dispatch => (
     PostAPIUtil.editPost({id: id, title: title, body: body})
                .then(editedPost => dispatch(editPostSuccess(editedPost)))
+)
+
+export const sortByScoreAsc = () => (
+    {
+        type: SORT_BY_SCORE_ASC,
+    }
+)
+
+export const sortByScoreDesc = () => (
+    {
+        type: SORT_BY_SCORE_DESC,
+    }
 )

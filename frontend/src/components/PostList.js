@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
-import { fetchAllPostsRequest, addNewPostRequest, fetchCategoriesRequest, upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest } from '../actions'
+import { fetchAllPostsRequest,
+         addNewPostRequest,
+         fetchCategoriesRequest,
+         upVoteRequest,
+         downVoteRequest,
+         deletePostRequest,
+         editPostRequest,
+         sortByScoreAsc,
+         sortByScoreDesc } from '../actions'
 
 
 import * as PostAPIUtil from '../utils/api';
@@ -77,7 +85,6 @@ class PostList extends Component {
         Modal.setAppElement('body');
         this.props.dispatchLoadAllPost();
         this.props.dispatchFetchCategories();
-
     }
 
     render() {
@@ -87,6 +94,13 @@ class PostList extends Component {
             <div>
 
                 <span>Categories: </span>
+                <span>
+                    <Link to={`/`}>
+                        All
+                    </Link>
+                    &nbsp;
+                    &nbsp;
+                </span>
                 {this.props.categoryList && this.props.categoryList.map(category =>
                     <span key={category.path}>
                         <Link to={`/${category.path}`}>
@@ -97,6 +111,17 @@ class PostList extends Component {
                     </span>
                 )}
 
+                <span>
+                    <button className='button-control' onClick={() => this.props.dispatchSortByScoreAsc()}>
+                        Sort by score ascending
+                    </button>
+                    <button className='button-control' onClick={() => this.props.dispatchSortByScoreDesc()}>
+                        Sort by score descending
+                    </button>
+                </span>
+
+                <br/>
+                <hr/>
                 <br/>
 
                 <ul>
@@ -241,7 +266,9 @@ function mapDispatchToProps (dispatch) {
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
         dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
         dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
-        dispatchEditPost: (data) => dispatch(editPostRequest(data))
+        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
+        dispatchSortByScoreAsc: () => dispatch(sortByScoreAsc()),
+        dispatchSortByScoreDesc: () => dispatch(sortByScoreDesc()),
     }
 }
 

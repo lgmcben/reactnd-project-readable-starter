@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <Route path="/" exact component={PostList}/>
-        <Route path="/:category" component={PostList}/>
+        <Route path="/:category" exact component={PostList}/>
         <Route path="/:category/:post_id" component={PostDetail}/>
       </div>
     );
