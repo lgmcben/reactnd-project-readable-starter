@@ -85,8 +85,28 @@ class PostList extends Component {
         const { newPostModalOpen, editPostModalOpen } = this.state;
         return (
             <div>
+
+                <span>Categories: </span>
+                {this.props.categoryList && this.props.categoryList.map(category =>
+                    <span key={category.path}>
+                        <Link to={`/${category.path}`}>
+                            {category.name}
+                        </Link>
+                        &nbsp;
+                        &nbsp;
+                    </span>
+                )}
+
+                <br/>
+
                 <ul>
-                    {this.props.postList.map(post =>
+                    {this.props.postList.filter(post => {
+                        if(this.props.match.params.category){
+                            return post.category === this.props.match.params.category;
+                        }else{
+                            return true;
+                        }
+                    }).map(post =>
 
                             <li className='post' key={post.id}>
                                 <p>
