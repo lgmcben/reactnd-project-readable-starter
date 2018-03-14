@@ -13,6 +13,10 @@ class PostDetail extends Component{
         editPostModalOpen: false
     }
 
+    componentDidMount() {
+        this.props.dispatchFetchComments(this.props.match.params.post_id);
+    }
+
     openEditPostModal = (id, title, body) => {
         this.setState({
             editPostModalOpen: true,
@@ -43,8 +47,6 @@ class PostDetail extends Component{
     render() {
         const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
 
-        this.props.dispatchFetchComments(post.id);
-
         const { editPostModalOpen } = this.state;
         if(post && !post.deleted){
             return(
@@ -74,6 +76,12 @@ class PostDetail extends Component{
                     <button className='button-control' onClick={() => this.props.dispatchDeletePost(post.id)}>
                         Delete
                     </button>
+
+                    <br/>
+
+                    {this.props.comments && this.props.comments.map(comment => <p>{comment.body}</p>)}
+
+
 
                     <Modal
                         isOpen={editPostModalOpen}
@@ -122,6 +130,7 @@ class PostDetail extends Component{
 function mapStateToProps ({post, comment, category}, ownProps) {
     return {
         postList: post.postList,
+        comments: comment.comments
     }
 }
 

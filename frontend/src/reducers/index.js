@@ -6,7 +6,8 @@ import {
     DELETE_POST_SUCCESS,
     EDIT_POST_SUCCESS,
     SORT_BY_SCORE_ASC,
-    SORT_BY_SCORE_DESC
+    SORT_BY_SCORE_DESC,
+    FETCH_COMMENTS_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -16,10 +17,10 @@ const initialState = {
 
 function comment (state = {}, action) {
     switch (action.type) {
-        case LOAD_ALL_POSTS_SUCCESS:
+        case FETCH_COMMENTS_SUCCESS:
             return {
                 ...state,
-                comment: 'test comment state'
+                comments: action.comments
             };
         default:
             return state;
