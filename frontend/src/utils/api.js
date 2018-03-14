@@ -16,16 +16,32 @@ function fetchPostList () {
 }
 
 function fetchCategories () {
-    const postListUrl = `${SERVER_URL}/categories`;
-    return fetch(postListUrl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'benkittitoken',
-                    'Content-Type': 'application/json'
-                },
-           })
-           .then((response) => response.json())
-           .then((responseJson) => responseJson.categories);
+  const postListUrl = `${SERVER_URL}/categories`;
+  return fetch(postListUrl, {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'benkittitoken',
+                  'Content-Type': 'application/json'
+              },
+         })
+         .then((response) => response.json())
+         .then((responseJson) => responseJson.categories);
+}
+
+function fetchComments (postId) {
+    const commentsUrl = `${SERVER_URL}/posts/${postId}/comments`;
+    return fetch(commentsUrl, {
+      method: 'GET',
+      headers: {
+          'Authorization': 'benkittitoken',
+          'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log('fetchComments', responseJson);
+      return responseJson;
+    });
 }
 
 function submitNewPost ({title = '', body = '', author = '', category = ''} = {}) {
@@ -132,6 +148,7 @@ export {
     vote,
     editPost,
     deletePost,
+    fetchComments,
     UPVOTE,
     DOWNVOTE
 }

@@ -99,3 +99,8 @@ export const sortByScoreDesc = () => (
         type: SORT_BY_SCORE_DESC,
     }
 )
+
+// export const fetchCommentsRequest = (postId) => {
+//     PostAPIUtil.fetchComments(postId)
+//                .then()
+// }

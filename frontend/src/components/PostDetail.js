@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
 import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest } from '../actions'
 
+// ben temp
+import * as PostAPIUtil from '../utils/api';
+
 class PostDetail extends Component{
 
     state = {
@@ -39,6 +42,12 @@ class PostDetail extends Component{
 
     render() {
         const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
+
+
+        PostAPIUtil.fetchComments(post.id)
+                   .then(response => {
+                        console.log('POstDetail render () fetchComments response = ', response);
+                   })
         const { editPostModalOpen } = this.state;
         if(post && !post.deleted){
             return(

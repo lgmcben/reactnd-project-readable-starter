@@ -12,7 +12,7 @@ import { fetchAllPostsRequest,
          sortByScoreAsc,
          sortByScoreDesc } from '../actions'
 
-
+// ben temp
 import * as PostAPIUtil from '../utils/api';
 //import Loading from 'react-loading'
 
