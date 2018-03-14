@@ -5,6 +5,7 @@ import * as PostAPIUtil from '../utils/api';
 export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
+export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
@@ -90,17 +91,24 @@ export const editPostRequest = ({id, title, body} = {}) => dispatch => (
 
 export const sortByScoreAsc = () => (
     {
-        type: SORT_BY_SCORE_ASC,
+        type: SORT_BY_SCORE_ASC
     }
 )
 
 export const sortByScoreDesc = () => (
     {
-        type: SORT_BY_SCORE_DESC,
+        type: SORT_BY_SCORE_DESC
     }
 )
 
-// export const fetchCommentsRequest = (postId) => {
-//     PostAPIUtil.fetchComments(postId)
-//                .then()
-// }
+export const fetchCommentsSuccess = (comments) => (
+    {
+        type: FETCH_COMMENTS_SUCCESS,
+        comments
+    }
+)
+
+export const fetchCommentsRequest = postId => dispatch => {
+    PostAPIUtil.fetchComments(postId)
+               .then(comments => dispatch(fetchCommentsSuccess(comments)))
+}
