@@ -96,6 +96,29 @@ function vote ({id = undefined, option = ''} = {}) {
          });
 }
 
+function voteComment ({id = undefined, option = ''} = {}) {
+  const url = `${SERVER_URL}/comments/${id}`;
+  const postBody = JSON.stringify({
+     option: option
+  })
+  return fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Authorization': 'benkittitoken',
+                  'Content-Type': 'application/json'
+              },
+              body: postBody
+         })
+         .then((response) => {
+              console.log(response);
+              return response.json();
+          })
+         .then((responseJson) => {
+              console.log('voteComment(), responseJson = ', responseJson);
+              return responseJson;
+         });
+}
+
 function editPost ({id='', title = '', body = ''} = {}) {
     const url = `${SERVER_URL}/posts/${id}`;
     const postBody = JSON.stringify({
@@ -149,6 +172,7 @@ export {
     editPost,
     deletePost,
     fetchComments,
+    voteComment,
     UPVOTE,
     DOWNVOTE
 }

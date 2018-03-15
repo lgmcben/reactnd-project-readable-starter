@@ -7,6 +7,7 @@ export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
+export const VOTE_COMMENT_SUCCESS = 'VOTE_COMMENT_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
@@ -48,22 +49,34 @@ export const addNewPostRequest = newPost => dispatch => (
                .then(addedPost => dispatch(addNewPostSuccess(addedPost)))
 );
 
-export const upVoteSuccess = post => (
+export const voteSuccess = post => (
     {
         type: VOTE_SUCCESS,
         post
     }
 )
 
+export const voteCommentSuccess = comment => (
+    {
+        type: VOTE_COMMENT_SUCCESS,
+        comment
+    }
+)
+
 export const upVoteRequest = postId => dispatch => (
     PostAPIUtil.vote({id: postId, option: PostAPIUtil.UPVOTE})
-               .then(post => dispatch(upVoteSuccess(post)))
+               .then(post => dispatch(voteSuccess(post)))
 );
 
 export const downVoteRequest = postId => dispatch => (
     PostAPIUtil.vote({id: postId, option: PostAPIUtil.DOWNVOTE})
-               .then(post => dispatch(upVoteSuccess(post)))
+               .then(post => dispatch(voteSuccess(post)))
 )
+
+export const upVoteCommentRequest = commentId => dispatch => (
+    PostAPIUtil.voteComment({id: commentId, option: PostAPIUtil.UPVOTE})
+               .then(comment => dispatch(voteCommentSuccess(comment)))
+);
 
 export const deletePostSuccess = (deletedPost) => (
     {

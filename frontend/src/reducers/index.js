@@ -7,12 +7,14 @@ import {
     EDIT_POST_SUCCESS,
     SORT_BY_SCORE_ASC,
     SORT_BY_SCORE_DESC,
-    FETCH_COMMENTS_SUCCESS
+    FETCH_COMMENTS_SUCCESS,
+    VOTE_COMMENT_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
 const initialState = {
     postList: [],
+    comments: []
 }
 
 function comment (state = {}, action) {
@@ -22,6 +24,11 @@ function comment (state = {}, action) {
                 ...state,
                 comments: action.comments
             };
+        case VOTE_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: state.comments.map(comment => comment.id === action.comment.id ? action.comment : comment)
+            }
         default:
             return state;
     }
