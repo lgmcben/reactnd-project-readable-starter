@@ -78,8 +78,20 @@ class PostDetail extends Component{
                     </button>
 
                     <br/>
+                    <hr/>
 
-                    {this.props.comments && this.props.comments.map(comment => <p>{comment.body}</p>)}
+                    <div className="comment-container">
+                    {this.props.comments && this.props.comments.map(comment =>
+                        (
+                            <div>
+                                <p>{comment.body}</p>
+                                <p>
+                                    <i>author: {comment.author} |  score: {comment.voteScore}</i>
+                                </p>
+                            </div>
+                        )
+                    )}
+                    </div>
 
 
 
