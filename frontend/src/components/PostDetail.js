@@ -80,14 +80,32 @@ class PostDetail extends Component{
                     <br/>
                     <hr/>
 
+                    <p>COMMENTS :</p>
+
                     <div className="comment-container">
                     {this.props.comments && this.props.comments.map(comment =>
                         (
                             <div>
+
                                 <p>{comment.body}</p>
                                 <p>
                                     <i>author: {comment.author} |  score: {comment.voteScore}</i>
                                 </p>
+                                <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
+                                    + Upvote
+                                </button>
+
+                                <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
+                                    - Downvote
+                                </button>
+
+                                <button className='button-control' onClick={() => this.openEditPostModal(post.id, post.title, post.body)}>
+                                    Edit
+                                </button>
+
+                                <button className='button-control' onClick={() => this.props.dispatchDeletePost(post.id)}>
+                                    Delete
+                                </button>
                             </div>
                         )
                     )}
