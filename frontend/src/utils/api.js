@@ -2,6 +2,19 @@ const UPVOTE = 'upVote';
 const DOWNVOTE = 'downVote';
 const SERVER_URL = 'http://localhost:3001';
 
+function fetchPost (id) {
+    const url = `${SERVER_URL}/posts/${id}`;
+    return fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+           })
+           .then((response) => response.json())
+           .then((post) => post);
+}
+
 function fetchPostList () {
     const postListUrl = `${SERVER_URL}/posts`;
     return fetch(postListUrl, {
@@ -236,6 +249,7 @@ function deleteComment (id) {
 
 
 export {
+    fetchPost,
     fetchPostList,
     submitNewPost,
     fetchCategories,

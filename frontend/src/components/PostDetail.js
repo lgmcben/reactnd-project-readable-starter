@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
-import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest, editCommentRequest, deleteCommentRequest, addNewCommentRequest } from '../actions'
+import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest, editCommentRequest, deleteCommentRequest, addNewCommentRequest, fetchSinglePostRequest } from '../actions'
 
 // ben temp
 import * as PostAPIUtil from '../utils/api';
@@ -16,6 +16,7 @@ class PostDetail extends Component{
     }
 
     componentDidMount() {
+        this.props.dispatchFetchSinglePost(this.props.match.params.post_id);
         this.props.dispatchFetchComments(this.props.match.params.post_id);
     }
 
@@ -96,8 +97,8 @@ class PostDetail extends Component{
 
 
     render() {
-        const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
-
+        //const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
+        const post = this.props.postDetail;
         const { editPostModalOpen, editCommentModalOpen, newCommentModalOpen } = this.state;
         if(post && !post.deleted){
             return(
@@ -269,6 +270,7 @@ class PostDetail extends Component{
 function mapStateToProps ({post, comment, category}, ownProps) {
     return {
         postList: post.postList,
+        postDetail: post.postDetail,
         comments: comment.comments
     }
 }
@@ -285,6 +287,7 @@ function mapDispatchToProps (dispatch) {
         dispatchEditComment: (data) => dispatch(editCommentRequest(data)),
         dispatchDeleteComment: (data) => dispatch(deleteCommentRequest(data)),
         dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
+        dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
     }
 }
 

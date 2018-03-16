@@ -3,6 +3,7 @@ import * as PostAPIUtil from '../utils/api';
 // I followed naming convention described here: https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js/
 
 export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
+export const FETCH_SINGLE_POST_SUCCESS = 'FETCH_SINGLE_POST_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS';
@@ -38,6 +39,18 @@ export const fetchCategoriesSuccess = categories => (
 export const fetchCategoriesRequest = () => dispatch => (
     PostAPIUtil.fetchCategories()
                .then(categories => dispatch(fetchCategoriesSuccess(categories)))
+);
+
+export const fetchSinglePostSuccess = postDetail => (
+    {
+        type: FETCH_SINGLE_POST_SUCCESS,
+        postDetail
+    }
+);
+
+export const fetchSinglePostRequest = id => dispatch => (
+    PostAPIUtil.fetchPost(id)
+               .then(postDetail => dispatch(fetchSinglePostSuccess(postDetail)))
 );
 
 export const addNewPostSuccess = (newPost) => (

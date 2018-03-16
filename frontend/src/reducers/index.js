@@ -1,5 +1,6 @@
 import {
     LOAD_ALL_POSTS_SUCCESS,
+    FETCH_SINGLE_POST_SUCCESS,
     ADD_NEW_POST_SUCCESS,
     FETCH_CATEGORIES_SUCCESS,
     VOTE_SUCCESS,
@@ -17,6 +18,7 @@ import { combineReducers } from 'redux';
 
 const initialState = {
     postList: [],
+    postDetail: {},
     comments: []
 }
 
@@ -54,6 +56,11 @@ function comment (state = {}, action) {
 
 function post (state = initialState, action) {
     switch (action.type) {
+        case FETCH_SINGLE_POST_SUCCESS:
+            return {
+                ...state,
+                postDetail: action.postDetail
+            }
         case LOAD_ALL_POSTS_SUCCESS:
             return {
                 ...state,
