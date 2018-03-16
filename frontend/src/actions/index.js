@@ -11,6 +11,7 @@ export const VOTE_COMMENT_SUCCESS = 'VOTE_COMMENT_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
 export const SORT_BY_SCORE_DESC = "SORT_BY_SCORE_DESC";
 
@@ -108,6 +109,18 @@ export const editCommentSuccess = (editedComment) => (
 export const deletePostRequest = postId => dispatch => (
     PostAPIUtil.deletePost(postId)
                .then(deletedPost => dispatch(deletePostSuccess(deletedPost)))
+)
+
+export const deleteCommentSuccess = (deletedComment) => (
+    {
+        type: DELETE_COMMENT_SUCCESS,
+        deletedComment
+    }
+)
+
+export const deleteCommentRequest = commentId => dispatch => (
+    PostAPIUtil.deleteComment(commentId)
+               .then(deletedComment => dispatch(deleteCommentSuccess(deletedComment)))
 )
 
 export const editPostRequest = ({id, title, body} = {}) => dispatch => (

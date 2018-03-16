@@ -186,6 +186,25 @@ function deletePost (id) {
          });
 }
 
+function deleteComment (id) {
+  const url = `${SERVER_URL}/comments/${id}`;
+  return fetch(url, {
+              method: 'DELETE',
+              headers: {
+                  'Authorization': 'benkittitoken',
+                  'Content-Type': 'application/json'
+              }
+         })
+         .then((response) => {
+              console.log(response);
+              return response.json();
+          })
+         .then((responseJson) => {
+              console.log('deleteComment(), responseJson = ', responseJson);
+              return responseJson;
+         });
+}
+
 
 
 export {
@@ -198,6 +217,7 @@ export {
     fetchComments,
     voteComment,
     editComment,
+    deleteComment,
     UPVOTE,
     DOWNVOTE
 }
