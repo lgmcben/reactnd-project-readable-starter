@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
-import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest } from '../actions'
+import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest } from '../actions'
 
 // ben temp
 import * as PostAPIUtil from '../utils/api';
@@ -95,7 +95,7 @@ class PostDetail extends Component{
                                     + Upvote
                                 </button>
 
-                                <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
+                                <button className='button-control' onClick={() => this.props.dispatchDownvoteComment(comment.id)}>
                                     - Downvote
                                 </button>
 
@@ -171,7 +171,8 @@ function mapDispatchToProps (dispatch) {
         dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
         dispatchEditPost: (data) => dispatch(editPostRequest(data)),
         dispatchFetchComments: (data) => dispatch(fetchCommentsRequest(data)),
-        dispatchUpvoteComment: (data) => dispatch(upVoteCommentRequest(data))
+        dispatchUpvoteComment: (data) => dispatch(upVoteCommentRequest(data)),
+        dispatchDownvoteComment: (data) => dispatch(downVoteCommentRequest(data))
     }
 }
 

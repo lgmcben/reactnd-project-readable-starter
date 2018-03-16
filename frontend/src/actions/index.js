@@ -78,6 +78,11 @@ export const upVoteCommentRequest = commentId => dispatch => (
                .then(comment => dispatch(voteCommentSuccess(comment)))
 );
 
+export const downVoteCommentRequest = commentId => dispatch => (
+    PostAPIUtil.voteComment({id: commentId, option: PostAPIUtil.DOWNVOTE})
+               .then(comment => dispatch(voteCommentSuccess(comment)))
+);
+
 export const deletePostSuccess = (deletedPost) => (
     {
         type: DELETE_POST_SUCCESS,
