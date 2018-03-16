@@ -47,7 +47,7 @@ function fetchComments (postId) {
 function submitNewPost ({title = '', body = '', author = '', category = ''} = {}) {
     const uuidv1 = require('uuid/v1');
     const url = `${SERVER_URL}/posts`;
-    const postBody = JSON.stringify({
+    const requestBody = JSON.stringify({
        id: uuidv1(),
        timestamp: Date.now(),
        title: title,
@@ -61,7 +61,7 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
                     'Authorization': 'benkittitoken',
                     'Content-Type': 'application/json'
                 },
-                body: postBody
+                body: requestBody
            })
            .then((response) => {
                 console.log(response);
@@ -75,7 +75,7 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
 
 function vote ({id = undefined, option = ''} = {}) {
   const url = `${SERVER_URL}/posts/${id}`;
-  const postBody = JSON.stringify({
+  const requestBody = JSON.stringify({
      option: option
   })
   return fetch(url, {
@@ -84,7 +84,7 @@ function vote ({id = undefined, option = ''} = {}) {
                   'Authorization': 'benkittitoken',
                   'Content-Type': 'application/json'
               },
-              body: postBody
+              body: requestBody
          })
          .then((response) => {
               console.log(response);
@@ -98,7 +98,7 @@ function vote ({id = undefined, option = ''} = {}) {
 
 function voteComment ({id = undefined, option = ''} = {}) {
   const url = `${SERVER_URL}/comments/${id}`;
-  const postBody = JSON.stringify({
+  const requestBody = JSON.stringify({
      option: option
   })
   return fetch(url, {
@@ -107,7 +107,7 @@ function voteComment ({id = undefined, option = ''} = {}) {
                   'Authorization': 'benkittitoken',
                   'Content-Type': 'application/json'
               },
-              body: postBody
+              body: requestBody
          })
          .then((response) => {
               console.log(response);
@@ -121,7 +121,7 @@ function voteComment ({id = undefined, option = ''} = {}) {
 
 function editPost ({id='', title = '', body = ''} = {}) {
     const url = `${SERVER_URL}/posts/${id}`;
-    const postBody = JSON.stringify({
+    const requestBody = JSON.stringify({
        title: title,
        body: body
     })
@@ -131,7 +131,7 @@ function editPost ({id='', title = '', body = ''} = {}) {
                     'Authorization': 'benkittitoken',
                     'Content-Type': 'application/json'
                 },
-                body: postBody
+                body: requestBody
            })
            .then((response) => {
                 console.log(response);
@@ -139,6 +139,30 @@ function editPost ({id='', title = '', body = ''} = {}) {
             })
            .then((responseJson) => {
                 console.log('editPost(), responseJson = ', responseJson);
+                return responseJson;
+           });
+}
+
+function editComment ({id='', timestamp, body = ''} = {}) {
+    const url = `${SERVER_URL}/comments/${id}`;
+    const requestBody = JSON.stringify({
+       timestamp: Date.now(),
+       body: body
+    })
+    return fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+           })
+           .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+           .then((responseJson) => {
+                console.log('editComment(), responseJson = ', responseJson);
                 return responseJson;
            });
 }
@@ -173,6 +197,7 @@ export {
     deletePost,
     fetchComments,
     voteComment,
+    editComment,
     UPVOTE,
     DOWNVOTE
 }

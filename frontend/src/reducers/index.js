@@ -8,7 +8,8 @@ import {
     SORT_BY_SCORE_ASC,
     SORT_BY_SCORE_DESC,
     FETCH_COMMENTS_SUCCESS,
-    VOTE_COMMENT_SUCCESS
+    VOTE_COMMENT_SUCCESS,
+    EDIT_COMMENT_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -28,6 +29,11 @@ function comment (state = {}, action) {
             return {
                 ...state,
                 comments: state.comments.map(comment => comment.id === action.comment.id ? action.comment : comment)
+            }
+        case EDIT_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: state.comments.map(comment => comment.id === action.editedComment.id ? action.editedComment : comment)
             }
         default:
             return state;
