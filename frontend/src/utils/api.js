@@ -73,6 +73,34 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
            });
 }
 
+function submitNewComment ({body = '', author = '', parentId = ''} = {}) {
+    const uuidv1 = require('uuid/v1');
+    const url = `${SERVER_URL}/comments`;
+    const requestBody = JSON.stringify({
+       id: uuidv1(),
+       timestamp: Date.now(),
+       body: body,
+       author: author,
+       parentId : parentId
+    })
+    return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+           })
+           .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+           .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+           });
+}
+
 function vote ({id = undefined, option = ''} = {}) {
   const url = `${SERVER_URL}/posts/${id}`;
   const requestBody = JSON.stringify({
@@ -218,6 +246,7 @@ export {
     voteComment,
     editComment,
     deleteComment,
+    submitNewComment,
     UPVOTE,
     DOWNVOTE
 }

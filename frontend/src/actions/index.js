@@ -12,6 +12,7 @@ export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const ADD_NEW_COMMENT_SUCCESS = 'ADD_NEW_COMMENT_SUCCESS';
 export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
 export const SORT_BY_SCORE_DESC = "SORT_BY_SCORE_DESC";
 
@@ -49,6 +50,18 @@ export const addNewPostSuccess = (newPost) => (
 export const addNewPostRequest = newPost => dispatch => (
     PostAPIUtil.submitNewPost(newPost)
                .then(addedPost => dispatch(addNewPostSuccess(addedPost)))
+);
+
+export const addNewCommentSuccess = (newComment) => (
+    {
+        type: ADD_NEW_COMMENT_SUCCESS,
+        newComment
+    }
+)
+
+export const addNewCommentRequest = newComment => dispatch => (
+    PostAPIUtil.submitNewComment(newComment)
+               .then(addedComment => dispatch(addNewCommentSuccess(addedComment)))
 );
 
 export const voteSuccess = post => (

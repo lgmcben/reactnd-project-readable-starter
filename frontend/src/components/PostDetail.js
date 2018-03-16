@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
-import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest, editCommentRequest, deleteCommentRequest } from '../actions'
+import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest, editCommentRequest, deleteCommentRequest, addNewCommentRequest } from '../actions'
 
 // ben temp
 import * as PostAPIUtil from '../utils/api';
@@ -10,6 +10,7 @@ import * as PostAPIUtil from '../utils/api';
 class PostDetail extends Component{
 
     state = {
+        newCommentModalOpen: false,
         editPostModalOpen: false,
         editCommentModalOpen: false
     }
@@ -36,6 +37,20 @@ class PostDetail extends Component{
         });
     }
 
+    openNewCommentModal = () => {
+        this.setState({
+            newCommentModalOpen: true,
+        });
+    }
+
+    closeNewCommentModal = () => {
+        this.setState({
+            newCommentModalOpen: false,
+            newCommentBody: '',
+            newCommentAuthor: '',
+        });
+    }
+
     openEditCommentModal = (id, body) => {
         this.setState({
             editCommentModalOpen: true,
@@ -50,6 +65,15 @@ class PostDetail extends Component{
             editCommentId: '',
             editCommentBody: ''
         });
+    }
+
+    _submitNewComment = (event) => {
+        event.preventDefault();
+        if (!this.state.newCommentBody) {
+            return
+        }
+        this.props.dispatchAddNewComment({ body: this.state.newCommentBody, author: this.state.newCommentAuthor, parentId: this.props.match.params.post_id });
+        this.closeNewCommentModal();
     }
 
     _submitEditPost = (event) => {
@@ -74,7 +98,7 @@ class PostDetail extends Component{
     render() {
         const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
 
-        const { editPostModalOpen, editCommentModalOpen } = this.state;
+        const { editPostModalOpen, editCommentModalOpen, newCommentModalOpen } = this.state;
         if(post && !post.deleted){
             return(
                 <div>
@@ -137,6 +161,41 @@ class PostDetail extends Component{
                         )
                     )}
                     </div>
+
+
+                    <hr/>
+                    <br/>
+                    <button onClick={() => this.openNewCommentModal()}>New comment</button>
+
+                    <Modal
+                        isOpen={newCommentModalOpen}
+                        onRequestClose={this.closeNewCommentModal}
+                        contentLabel='NewCommentModal'
+                    >
+                        <div>
+                            <h2>Add new comment</h2>
+                            <input
+                                type='text'
+                                placeholder='Body...'
+                                value={this.state.newCommentBody}
+                                onChange={(event) => this.setState({newCommentBody: event.target.value})}
+                            />
+                            <br/>
+                            <br/>
+                            <input
+                                type='text'
+                                placeholder='Author...'
+                                value={this.state.newCommentAuthor}
+                                onChange={(event) => this.setState({newCommentAuthor: event.target.value})}
+                            />
+                            <br/>
+                            <button onClick={this._submitNewComment}>
+                                Submit
+                            </button>
+
+                        </div>
+
+                    </Modal>
 
 
 
@@ -225,6 +284,7 @@ function mapDispatchToProps (dispatch) {
         dispatchDownvoteComment: (data) => dispatch(downVoteCommentRequest(data)),
         dispatchEditComment: (data) => dispatch(editCommentRequest(data)),
         dispatchDeleteComment: (data) => dispatch(deleteCommentRequest(data)),
+        dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
     }
 }
 

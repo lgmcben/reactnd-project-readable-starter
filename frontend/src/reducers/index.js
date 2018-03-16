@@ -10,7 +10,8 @@ import {
     FETCH_COMMENTS_SUCCESS,
     VOTE_COMMENT_SUCCESS,
     EDIT_COMMENT_SUCCESS,
-    DELETE_COMMENT_SUCCESS
+    DELETE_COMMENT_SUCCESS,
+    ADD_NEW_COMMENT_SUCCESS
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -41,6 +42,11 @@ function comment (state = {}, action) {
                 ...state,
                 comments: state.comments.filter(comment => comment.id !== action.deletedComment.id)
             }
+        case ADD_NEW_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: [...state.comments, action.newComment]
+            };
         default:
             return state;
     }
