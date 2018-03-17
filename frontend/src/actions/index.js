@@ -74,7 +74,10 @@ export const addNewCommentSuccess = (newComment) => (
 
 export const addNewCommentRequest = newComment => dispatch => (
     PostAPIUtil.submitNewComment(newComment)
-               .then(addedComment => dispatch(addNewCommentSuccess(addedComment)))
+               .then(addedComment => {
+                    dispatch(addNewCommentSuccess(addedComment));
+                    dispatch(fetchSinglePostRequest(addedComment.parentId));
+                })
 );
 
 export const voteSuccess = post => (
@@ -146,7 +149,10 @@ export const deleteCommentSuccess = (deletedComment) => (
 
 export const deleteCommentRequest = commentId => dispatch => (
     PostAPIUtil.deleteComment(commentId)
-               .then(deletedComment => dispatch(deleteCommentSuccess(deletedComment)))
+               .then(deletedComment => {
+                    dispatch(deleteCommentSuccess(deletedComment));
+                    dispatch(fetchSinglePostRequest(deletedComment.parentId));
+               })
 )
 
 export const editPostRequest = ({id, title, body} = {}) => dispatch => (
