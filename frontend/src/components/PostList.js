@@ -92,8 +92,6 @@ class PostList extends Component {
         const { newPostModalOpen, editPostModalOpen } = this.state;
         return (
             <div>
-
-                <span>Categories: </span>
                 <span>
                     <Link to={`/`}>
                         All
@@ -124,6 +122,8 @@ class PostList extends Component {
                 <hr/>
                 <br/>
 
+                <p>Current category: {this.props.match.params.category ? this.props.match.params.category : 'All'}</p>
+                <br/>
                 <ul>
                     {this.props.postList.filter(post => {
                         if(this.props.match.params.category){
