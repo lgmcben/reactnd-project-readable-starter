@@ -95,6 +95,10 @@ class PostDetail extends Component{
         this.closeEditCommentModal();
     }
 
+    navigateBack = () => {
+        this.props.history.goBack()
+    }
+
 
     render() {
         //const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
@@ -103,6 +107,9 @@ class PostDetail extends Component{
         if(post && !post.deleted){
             return(
                 <div>
+                    <button onClick={this.navigateBack}>
+                        Back
+                    </button>
                     <p>
                         <strong>{post.title}</strong>
                     </p>
