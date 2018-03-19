@@ -75,17 +75,21 @@ function post (state = initialState, action) {
         case VOTE_SUCCESS:
             return {
                 ...state,
-                postList: state.postList.map(post => post.id === action.post.id ? action.post : post)
+                postList: state.postList.map(post => post.id === action.post.id ? action.post : post),
+                postDetail: action.post
+
             }
         case DELETE_POST_SUCCESS:
             return {
                 ...state,
-                postList: state.postList.filter(post => post.id !== action.deletedPost.id)
+                postList: state.postList.filter(post => post.id !== action.deletedPost.id),
+                postDetail: null
             }
         case EDIT_POST_SUCCESS:
             return {
                 ...state,
-                postList: state.postList.map(post => post.id === action.editedPost.id ? action.editedPost : post)
+                postList: state.postList.map(post => post.id === action.editedPost.id ? action.editedPost : post),
+                postDetail: action.editedPost
             }
         case SORT_BY_SCORE_ASC:
             return {
