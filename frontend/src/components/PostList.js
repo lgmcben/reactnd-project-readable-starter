@@ -48,7 +48,8 @@ class PostList extends Component {
 
     openNewPostModal = () => {
         this.setState({
-            newPostModalOpen: true
+            newPostModalOpen: true,
+            warning: ''
         });
     }
 
@@ -58,13 +59,15 @@ class PostList extends Component {
             newPostTitle: '',
             newPostBody: '',
             newPostAuthor: '',
-            newPostCategory: ''
+            newPostCategory: '',
+            warning: ''
         });
     }
 
     _submitNewPost = (event) => {
         event.preventDefault();
-        if (!this.state.newPostTitle) {
+        if (!this.state.newPostTitle || !this.state.newPostBody || !this.state.newPostAuthor || !this.state.newPostCategory) {
+            this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
         //console.log('selected category', this.state.newPostCategory);
@@ -202,9 +205,13 @@ class PostList extends Component {
                                 <option key={category.path} value={category.name}>{category.name}</option>
                             )}
                         </select>
+
+
                         <button onClick={this._submitNewPost}>
                             Submit
                         </button>
+
+                        {this.state.warning && <p className='warning'>{this.state.warning}</p>}
 
                     </div>
 

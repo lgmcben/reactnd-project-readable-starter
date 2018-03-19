@@ -31,6 +31,10 @@
   margin-bottom: 50px;
 }
 
+.warning {
+  color: red;
+}
+
 .comment-container {
   margin-left: 100px;
 }
