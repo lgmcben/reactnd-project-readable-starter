@@ -33,7 +33,8 @@ class PostList extends Component {
             editPostModalOpen: true,
             editPostId: id,
             editPostTitle: title,
-            editPostBody: body
+            editPostBody: body,
+            warning: ''
         });
     }
 
@@ -42,7 +43,8 @@ class PostList extends Component {
             editPostModalOpen: false,
             editPostId: '',
             editPostTitle: '',
-            editPostBody: ''
+            editPostBody: '',
+            warning: ''
         });
     }
 
@@ -77,7 +79,8 @@ class PostList extends Component {
 
     _submitEditPost = (event) => {
         event.preventDefault();
-        if (!this.state.editPostTitle) {
+        if (!this.state.editPostTitle || !this.state.editPostBody ) {
+            this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
         this.props.dispatchEditPost({id: this.state.editPostId, title: this.state.editPostTitle, body: this.state.editPostBody});
@@ -246,6 +249,8 @@ class PostList extends Component {
                         <button onClick={this._submitEditPost}>
                             Submit
                         </button>
+
+                        {this.state.warning && <p className='warning'>{this.state.warning}</p>}
 
                     </div>
 

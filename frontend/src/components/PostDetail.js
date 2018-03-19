@@ -25,7 +25,8 @@ class PostDetail extends Component{
             editPostModalOpen: true,
             editPostId: id,
             editPostTitle: title,
-            editPostBody: body
+            editPostBody: body,
+            warning: ''
         });
     }
 
@@ -34,13 +35,15 @@ class PostDetail extends Component{
             editPostModalOpen: false,
             editPostId: '',
             editPostTitle: '',
-            editPostBody: ''
+            editPostBody: '',
+            warning: ''
         });
     }
 
     openNewCommentModal = () => {
         this.setState({
             newCommentModalOpen: true,
+            warning: ''
         });
     }
 
@@ -49,6 +52,7 @@ class PostDetail extends Component{
             newCommentModalOpen: false,
             newCommentBody: '',
             newCommentAuthor: '',
+            warning: ''
         });
     }
 
@@ -56,7 +60,8 @@ class PostDetail extends Component{
         this.setState({
             editCommentModalOpen: true,
             editCommentId: id,
-            editCommentBody: body
+            editCommentBody: body,
+            warning: ''
         });
     }
 
@@ -64,13 +69,15 @@ class PostDetail extends Component{
         this.setState({
             editCommentModalOpen: false,
             editCommentId: '',
-            editCommentBody: ''
+            editCommentBody: '',
+            warning: ''
         });
     }
 
     _submitNewComment = (event) => {
         event.preventDefault();
-        if (!this.state.newCommentBody) {
+        if (!this.state.newCommentBody || !this.state.newCommentAuthor) {
+            this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
         this.props.dispatchAddNewComment({ body: this.state.newCommentBody, author: this.state.newCommentAuthor, parentId: this.props.match.params.post_id });
@@ -79,7 +86,8 @@ class PostDetail extends Component{
 
     _submitEditPost = (event) => {
         event.preventDefault();
-        if (!this.state.editPostTitle) {
+        if (!this.state.editPostTitle || !this.state.editPostBody) {
+            this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
         this.props.dispatchEditPost({id: this.state.editPostId, title: this.state.editPostTitle, body: this.state.editPostBody});
@@ -89,6 +97,7 @@ class PostDetail extends Component{
     _submitEditComment = (event) => {
         event.preventDefault();
         if (!this.state.editCommentBody) {
+            this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
         this.props.dispatchEditComment({id: this.state.editCommentId, body: this.state.editCommentBody});
@@ -201,6 +210,8 @@ class PostDetail extends Component{
                                 Submit
                             </button>
 
+                            {this.state.warning && <p className='warning'>{this.state.warning}</p>}
+
                         </div>
 
                     </Modal>
@@ -234,6 +245,8 @@ class PostDetail extends Component{
                                 Submit
                             </button>
 
+                            {this.state.warning && <p className='warning'>{this.state.warning}</p>}
+
                         </div>
 
                     </Modal>
@@ -256,6 +269,8 @@ class PostDetail extends Component{
                             <button onClick={this._submitEditComment}>
                                 Submit
                             </button>
+
+                            {this.state.warning && <p className='warning'>{this.state.warning}</p>}
 
                         </div>
 
