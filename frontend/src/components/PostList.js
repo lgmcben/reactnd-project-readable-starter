@@ -128,7 +128,6 @@ class PostList extends Component {
 
                 <p>Current category: {this.props.match.params.category ? this.props.match.params.category : 'All'}</p>
                 <br/>
-                <ul>
                     {this.props.postList.filter(post => {
                         if(this.props.match.params.category){
                             return post.category === this.props.match.params.category;
@@ -136,9 +135,9 @@ class PostList extends Component {
                             return true;
                         }
                     }).map(post =>
-                            <Post post={post} key={post.id} openEditPostModal={this.openEditPostModal}/>
+                            <Post post={post} key={post.id} openEditPostModal={this.openEditPostModal} titleLinksToDetail={true}/>
                     )}
-                </ul>
+
                 <button onClick={() => this.openNewPostModal()}>New post</button>
 
                 <Modal

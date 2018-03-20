@@ -12,6 +12,7 @@ import {  addNewCommentRequest,
           upVoteRequest } from '../actions';
 
 import Comment from './Comment';
+import Post from './Post';
 
 class PostDetail extends Component{
     state = {
@@ -129,33 +130,7 @@ class PostDetail extends Component{
                         Back
                     </button>
 
-                    <p>
-                        <strong>{post.title}</strong>
-                    </p>
-
-                    <p>
-                        {post.body}
-                    </p>
-
-                    <p>
-                        <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
-                    </p>
-
-                    <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
-                        + Upvote
-                    </button>
-
-                    <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
-                        - Downvote
-                    </button>
-
-                    <button className='button-control' onClick={() => this.openEditPostModal(post.id, post.title, post.body)}>
-                        Edit
-                    </button>
-
-                    <button className='button-control' onClick={() => this.props.dispatchDeletePost(post.id)}>
-                        Delete
-                    </button>
+                    <Post post={post} showBody={true} />
 
                     <br/>
                     <hr/>

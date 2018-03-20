@@ -8,12 +8,20 @@ import { upVoteRequest,
 class Post extends Component {
     render() {
         return (
-            <li className='post'>
+            <div className='post'>
                 <p>
-                    <Link to={`/${this.props.post.category}/${this.props.post.id}`}>
+                    {this.props.titleLinksToDetail ? (
+                        <Link to={`/${this.props.post.category}/${this.props.post.id}`}>
+                            <strong>{this.props.post.title}</strong>
+                        </Link>)
+                        :
                         <strong>{this.props.post.title}</strong>
-                    </Link>
+                    }
+
                 </p>
+
+                {this.props.showBody && <p>{this.props.post.body}</p>}
+
                 <p>
                     <i>author: {this.props.post.author} | comments: {this.props.post.commentCount} | score: {this.props.post.voteScore}</i>
                 </p>
@@ -33,7 +41,7 @@ class Post extends Component {
                 <button className='button-control' onClick={ () => this.props.dispatchDeletePost(this.props.post.id) }>
                     Delete
                 </button>
-            </li>
+            </div>
         )
     }
 }
