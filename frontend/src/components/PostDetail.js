@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
-import {  upVoteRequest, downVoteRequest, deletePostRequest, editPostRequest, fetchCommentsRequest, upVoteCommentRequest, downVoteCommentRequest, editCommentRequest, deleteCommentRequest, addNewCommentRequest, fetchSinglePostRequest } from '../actions'
-
-// ben temp
-import * as PostAPIUtil from '../utils/api';
+import {  addNewCommentRequest,
+          deleteCommentRequest,
+          deletePostRequest,
+          downVoteRequest,
+          downVoteCommentRequest,
+          editCommentRequest,
+          editPostRequest,
+          fetchCommentsRequest,
+          fetchSinglePostRequest,
+          upVoteRequest,
+          upVoteCommentRequest } from '../actions'
 
 class PostDetail extends Component{
-
     state = {
-        newCommentModalOpen: false,
+        editCommentModalOpen: false,
         editPostModalOpen: false,
-        editCommentModalOpen: false
+        newCommentModalOpen: false
     }
 
     componentDidMount() {
@@ -26,7 +32,7 @@ class PostDetail extends Component{
             editPostId: id,
             editPostTitle: title,
             editPostBody: body,
-            warning: ''
+            warning: '' // Minimum form validation: display simple warning when one or more fields are missing
         });
     }
 
@@ -110,7 +116,11 @@ class PostDetail extends Component{
 
 
     render() {
-        //const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
+        // I first went with this approach: finding a post from existing postList in redux store. Then changed to fetching single post.
+        // So that this PostDetail component won't rely on postList data
+        // Thus I'll leave this commented line of code here for reference:
+        // const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
+
         const post = this.props.postDetail;
         const { editPostModalOpen, editCommentModalOpen, newCommentModalOpen } = this.state;
         if(post && !post.deleted){
@@ -119,12 +129,15 @@ class PostDetail extends Component{
                     <button onClick={this.navigateBack}>
                         Back
                     </button>
+
                     <p>
                         <strong>{post.title}</strong>
                     </p>
+
                     <p>
                         {post.body}
                     </p>
+
                     <p>
                         <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
                     </p>
@@ -150,15 +163,18 @@ class PostDetail extends Component{
 
                     <p>COMMENTS :</p>
 
-                    <div className="comment-container">
+                    <div className='comment-container'>
                     {this.props.comments && this.props.comments.map(comment =>
                         (
                             <div>
+                                <p>
+                                    {comment.body}
+                                </p>
 
-                                <p>{comment.body}</p>
                                 <p>
                                     <i>author: {comment.author} |  score: {comment.voteScore}</i>
                                 </p>
+
                                 <button className='button-control' onClick={() => this.props.dispatchUpvoteComment(comment.id)}>
                                     + Upvote
                                 </button>
@@ -179,9 +195,9 @@ class PostDetail extends Component{
                     )}
                     </div>
 
-
                     <hr/>
                     <br/>
+
                     <button onClick={() => this.openNewCommentModal()}>New comment</button>
 
                     <Modal
@@ -211,12 +227,8 @@ class PostDetail extends Component{
                             </button>
 
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
-
                         </div>
-
                     </Modal>
-
-
 
                     <Modal
                         isOpen={editPostModalOpen}
@@ -246,9 +258,7 @@ class PostDetail extends Component{
                             </button>
 
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
-
                         </div>
-
                     </Modal>
 
                     <Modal
@@ -271,9 +281,7 @@ class PostDetail extends Component{
                             </button>
 
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
-
                         </div>
-
                     </Modal>
                 </div>
             )
@@ -281,11 +289,10 @@ class PostDetail extends Component{
             return (
                 <div>
                     <p>404 post not found or is deleted</p>
-                    <Link to="/">Back to post list</Link>
+                    <Link to='/'>Back to post list</Link>
                 </div>
             )
         }
-
     }
 }
 
@@ -299,6 +306,7 @@ function mapStateToProps ({post, comment, category}, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
+        dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
         dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
         dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
@@ -309,7 +317,6 @@ function mapDispatchToProps (dispatch) {
         dispatchEditComment: (data) => dispatch(editCommentRequest(data)),
         dispatchDeleteComment: (data) => dispatch(deleteCommentRequest(data)),
         dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
-        dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
     }
 }
 

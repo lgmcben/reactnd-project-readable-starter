@@ -14,8 +14,8 @@ export const FETCH_SINGLE_POST_SUCCESS = 'FETCH_SINGLE_POST_SUCCESS';
 export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const VOTE_COMMENT_SUCCESS = 'VOTE_COMMENT_SUCCESS';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
-export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
-export const SORT_BY_SCORE_DESC = "SORT_BY_SCORE_DESC";
+export const SORT_BY_SCORE_ASC = 'SORT_BY_SCORE_ASC';
+export const SORT_BY_SCORE_DESC = 'SORT_BY_SCORE_DESC';
 
 export const fetchAllPostsRequest = () => dispatch => (
     PostAPIUtil.fetchPostList()
