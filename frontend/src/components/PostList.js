@@ -5,13 +5,10 @@ import { Link } from 'react-router-dom'
 import { fetchAllPostsRequest,
          addNewPostRequest,
          fetchCategoriesRequest,
-         upVoteRequest,
-         downVoteRequest,
-         deletePostRequest,
-         editPostRequest,
          sortByScoreAsc,
          sortByScoreDesc } from '../actions'
 
+import Post from './Post'
 // ben temp
 import * as PostAPIUtil from '../utils/api';
 //import Loading from 'react-loading'
@@ -138,34 +135,7 @@ class PostList extends Component {
                             return true;
                         }
                     }).map(post =>
-
-                            <li className='post' key={post.id}>
-                                <p>
-                                    <Link to={`/${post.category}/${post.id}`}>
-                                        <strong>{post.title}</strong>
-                                    </Link>
-                                </p>
-                                <p>
-                                    <i>author: {post.author} | comments: {post.commentCount} | score: {post.voteScore}</i>
-                                </p>
-
-                                <button className='button-control' onClick={() => this.props.dispatchUpvote(post.id)}>
-                                    + Upvote
-                                </button>
-
-                                <button className='button-control' onClick={() => this.props.dispatchDownvote(post.id)}>
-                                    - Downvote
-                                </button>
-
-                                <button className='button-control' onClick={() => this.openEditPostModal(post.id, post.title, post.body)}>
-                                    Edit
-                                </button>
-
-                                <button className='button-control' onClick={ () => this.props.dispatchDeletePost(post.id) }>
-                                    Delete
-                                </button>
-                            </li>
-
+                            <Post post={post} key={post.id}/>
                     )}
                 </ul>
                 <button onClick={() => this.openNewPostModal()}>New post</button>
