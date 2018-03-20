@@ -1,21 +1,26 @@
 import * as PostAPIUtil from '../utils/api';
 
-// I followed naming convention described here: https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js/
-
-export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
-export const FETCH_SINGLE_POST_SUCCESS = 'FETCH_SINGLE_POST_SUCCESS';
+// I followed redux-thunk action naming convention described here:
+// https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js/
+export const ADD_NEW_COMMENT_SUCCESS = 'ADD_NEW_COMMENT_SUCCESS';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS';
-export const VOTE_SUCCESS = 'VOTE_SUCCESS';
+export const FETCH_SINGLE_POST_SUCCESS = 'FETCH_SINGLE_POST_SUCCESS';
+export const LOAD_ALL_POSTS_SUCCESS = 'LOAD_ALL_POSTS_SUCCESS';
 export const VOTE_COMMENT_SUCCESS = 'VOTE_COMMENT_SUCCESS';
-export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
-export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
-export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
-export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
-export const ADD_NEW_COMMENT_SUCCESS = 'ADD_NEW_COMMENT_SUCCESS';
+export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const SORT_BY_SCORE_ASC = "SORT_BY_SCORE_ASC";
 export const SORT_BY_SCORE_DESC = "SORT_BY_SCORE_DESC";
+
+export const fetchAllPostsRequest = () => dispatch => (
+    PostAPIUtil.fetchPostList()
+               .then(allPosts => dispatch(fetchAllPostsSuccess(allPosts)))
+);
 
 export const fetchAllPostsSuccess = allPosts => (
     {
@@ -24,9 +29,9 @@ export const fetchAllPostsSuccess = allPosts => (
     }
 );
 
-export const fetchAllPostsRequest = () => dispatch => (
-    PostAPIUtil.fetchPostList()
-               .then(allPosts => dispatch(fetchAllPostsSuccess(allPosts)))
+export const fetchCategoriesRequest = () => dispatch => (
+    PostAPIUtil.fetchCategories()
+               .then(categories => dispatch(fetchCategoriesSuccess(categories)))
 );
 
 export const fetchCategoriesSuccess = categories => (
@@ -36,9 +41,9 @@ export const fetchCategoriesSuccess = categories => (
     }
 );
 
-export const fetchCategoriesRequest = () => dispatch => (
-    PostAPIUtil.fetchCategories()
-               .then(categories => dispatch(fetchCategoriesSuccess(categories)))
+export const fetchSinglePostRequest = id => dispatch => (
+    PostAPIUtil.fetchPost(id)
+               .then(postDetail => dispatch(fetchSinglePostSuccess(postDetail)))
 );
 
 export const fetchSinglePostSuccess = postDetail => (
@@ -48,15 +53,15 @@ export const fetchSinglePostSuccess = postDetail => (
     }
 );
 
-export const fetchSinglePostRequest = id => dispatch => (
-    PostAPIUtil.fetchPost(id)
-               .then(postDetail => dispatch(fetchSinglePostSuccess(postDetail)))
-);
+export const fetchCommentsRequest = postId => dispatch => {
+    PostAPIUtil.fetchComments(postId)
+               .then(comments => dispatch(fetchCommentsSuccess(comments)))
+}
 
-export const addNewPostSuccess = (newPost) => (
+export const fetchCommentsSuccess = (comments) => (
     {
-        type: ADD_NEW_POST_SUCCESS,
-        newPost
+        type: FETCH_COMMENTS_SUCCESS,
+        comments
     }
 )
 
@@ -65,10 +70,10 @@ export const addNewPostRequest = newPost => dispatch => (
                .then(addedPost => dispatch(addNewPostSuccess(addedPost)))
 );
 
-export const addNewCommentSuccess = (newComment) => (
+export const addNewPostSuccess = (newPost) => (
     {
-        type: ADD_NEW_COMMENT_SUCCESS,
-        newComment
+        type: ADD_NEW_POST_SUCCESS,
+        newPost
     }
 )
 
@@ -80,17 +85,10 @@ export const addNewCommentRequest = newComment => dispatch => (
                 })
 );
 
-export const voteSuccess = post => (
+export const addNewCommentSuccess = (newComment) => (
     {
-        type: VOTE_SUCCESS,
-        post
-    }
-)
-
-export const voteCommentSuccess = comment => (
-    {
-        type: VOTE_COMMENT_SUCCESS,
-        comment
+        type: ADD_NEW_COMMENT_SUCCESS,
+        newComment
     }
 )
 
@@ -104,6 +102,13 @@ export const downVoteRequest = postId => dispatch => (
                .then(post => dispatch(voteSuccess(post)))
 )
 
+export const voteSuccess = post => (
+    {
+        type: VOTE_SUCCESS,
+        post
+    }
+)
+
 export const upVoteCommentRequest = commentId => dispatch => (
     PostAPIUtil.voteComment({id: commentId, option: PostAPIUtil.UPVOTE})
                .then(comment => dispatch(voteCommentSuccess(comment)))
@@ -114,11 +119,16 @@ export const downVoteCommentRequest = commentId => dispatch => (
                .then(comment => dispatch(voteCommentSuccess(comment)))
 );
 
-export const deletePostSuccess = (deletedPost) => (
+export const voteCommentSuccess = comment => (
     {
-        type: DELETE_POST_SUCCESS,
-        deletedPost
+        type: VOTE_COMMENT_SUCCESS,
+        comment
     }
+)
+
+export const editPostRequest = ({id, title, body} = {}) => dispatch => (
+    PostAPIUtil.editPost({id: id, title: title, body: body})
+               .then(editedPost => dispatch(editPostSuccess(editedPost)))
 )
 
 export const editPostSuccess = (editedPost) => (
@@ -126,6 +136,11 @@ export const editPostSuccess = (editedPost) => (
         type: EDIT_POST_SUCCESS,
         editedPost
     }
+)
+
+export const editCommentRequest = ({id, body} = {}) => dispatch => (
+    PostAPIUtil.editComment({id: id, body: body})
+               .then(editedComment => dispatch(editCommentSuccess(editedComment)))
 )
 
 export const editCommentSuccess = (editedComment) => (
@@ -140,10 +155,10 @@ export const deletePostRequest = postId => dispatch => (
                .then(deletedPost => dispatch(deletePostSuccess(deletedPost)))
 )
 
-export const deleteCommentSuccess = (deletedComment) => (
+export const deletePostSuccess = (deletedPost) => (
     {
-        type: DELETE_COMMENT_SUCCESS,
-        deletedComment
+        type: DELETE_POST_SUCCESS,
+        deletedPost
     }
 )
 
@@ -155,14 +170,11 @@ export const deleteCommentRequest = commentId => dispatch => (
                })
 )
 
-export const editPostRequest = ({id, title, body} = {}) => dispatch => (
-    PostAPIUtil.editPost({id: id, title: title, body: body})
-               .then(editedPost => dispatch(editPostSuccess(editedPost)))
-)
-
-export const editCommentRequest = ({id, body} = {}) => dispatch => (
-    PostAPIUtil.editComment({id: id, body: body})
-               .then(editedComment => dispatch(editCommentSuccess(editedComment)))
+export const deleteCommentSuccess = (deletedComment) => (
+    {
+        type: DELETE_COMMENT_SUCCESS,
+        deletedComment
+    }
 )
 
 export const sortByScoreAsc = () => (
@@ -176,15 +188,3 @@ export const sortByScoreDesc = () => (
         type: SORT_BY_SCORE_DESC
     }
 )
-
-export const fetchCommentsSuccess = (comments) => (
-    {
-        type: FETCH_COMMENTS_SUCCESS,
-        comments
-    }
-)
-
-export const fetchCommentsRequest = postId => dispatch => {
-    PostAPIUtil.fetchComments(postId)
-               .then(comments => dispatch(fetchCommentsSuccess(comments)))
-}
