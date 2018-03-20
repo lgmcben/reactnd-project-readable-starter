@@ -3,13 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import {  addNewCommentRequest,
-          deletePostRequest,
-          downVoteRequest,
-          editCommentRequest,
-          editPostRequest,
           fetchCommentsRequest,
-          fetchSinglePostRequest,
-          upVoteRequest } from '../actions';
+          fetchSinglePostRequest } from '../actions';
 
 import Comment from './Comment';
 import Post from './Post';
@@ -116,11 +111,6 @@ class PostDetail extends Component{
 
 
     render() {
-        // I first went with this approach: finding a post from existing postList in redux store. Then changed to fetching single post.
-        // So that this PostDetail component won't rely on postList data
-        // Thus I'll leave this commented line of code here for reference:
-        // const post = this.props.postList.find(post => post.id === this.props.match.params.post_id);
-
         const post = this.props.postDetail;
         const { editPostModalOpen, editCommentModalOpen, newCommentModalOpen } = this.state;
         if(post && !post.deleted){
@@ -130,7 +120,7 @@ class PostDetail extends Component{
                         Back
                     </button>
 
-                    <Post post={post} showBody={true} />
+                    <Post post={post} openEditPostModal={this.openEditPostModal} showBody={true} />
 
                     <br/>
                     <hr/>
@@ -175,7 +165,6 @@ class PostDetail extends Component{
                             <button onClick={this._submitNewComment}>
                                 Submit
                             </button>
-
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
                         </div>
                     </Modal>
@@ -206,7 +195,6 @@ class PostDetail extends Component{
                             <button onClick={this._submitEditPost}>
                                 Submit
                             </button>
-
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
                         </div>
                     </Modal>
@@ -229,7 +217,6 @@ class PostDetail extends Component{
                             <button onClick={this._submitEditComment}>
                                 Submit
                             </button>
-
                             {this.state.warning && <p className='warning'>{this.state.warning}</p>}
                         </div>
                     </Modal>
@@ -248,7 +235,6 @@ class PostDetail extends Component{
 
 function mapStateToProps ({post, comment, category}, ownProps) {
     return {
-        postList: post.postList,
         postDetail: post.postDetail,
         comments: comment.comments
     }
@@ -256,14 +242,9 @@ function mapStateToProps ({post, comment, category}, ownProps) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
-        dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
-        dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
-        dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
-        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
-        dispatchFetchComments: (data) => dispatch(fetchCommentsRequest(data)),
-        dispatchEditComment: (data) => dispatch(editCommentRequest(data)),
         dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
+        dispatchFetchComments: (data) => dispatch(fetchCommentsRequest(data)),
+        dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
     }
 }
 

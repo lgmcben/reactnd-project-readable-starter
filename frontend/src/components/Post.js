@@ -17,7 +17,6 @@ class Post extends Component {
                         :
                         <strong>{this.props.post.title}</strong>
                     }
-
                 </p>
 
                 {this.props.showBody && <p>{this.props.post.body}</p>}
