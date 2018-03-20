@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
-import Modal from 'react-modal'
+import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
 import {  addNewCommentRequest,
-          deleteCommentRequest,
           deletePostRequest,
           downVoteRequest,
-          downVoteCommentRequest,
           editCommentRequest,
           editPostRequest,
           fetchCommentsRequest,
           fetchSinglePostRequest,
-          upVoteRequest,
-          upVoteCommentRequest } from '../actions'
+          upVoteRequest } from '../actions';
+
+import Comment from './Comment';
 
 class PostDetail extends Component{
     state = {
@@ -166,31 +165,7 @@ class PostDetail extends Component{
                     <div className='comment-container'>
                     {this.props.comments && this.props.comments.map(comment =>
                         (
-                            <div>
-                                <p>
-                                    {comment.body}
-                                </p>
-
-                                <p>
-                                    <i>author: {comment.author} |  score: {comment.voteScore}</i>
-                                </p>
-
-                                <button className='button-control' onClick={() => this.props.dispatchUpvoteComment(comment.id)}>
-                                    + Upvote
-                                </button>
-
-                                <button className='button-control' onClick={() => this.props.dispatchDownvoteComment(comment.id)}>
-                                    - Downvote
-                                </button>
-
-                                <button className='button-control' onClick={() => this.openEditCommentModal(comment.id, comment.body)}>
-                                    Edit
-                                </button>
-
-                                <button className='button-control' onClick={() => this.props.dispatchDeleteComment(comment.id)}>
-                                    Delete
-                                </button>
-                            </div>
+                            <Comment comment={comment} openEditCommentModal={this.openEditCommentModal}/>
                         )
                     )}
                     </div>
@@ -312,10 +287,7 @@ function mapDispatchToProps (dispatch) {
         dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
         dispatchEditPost: (data) => dispatch(editPostRequest(data)),
         dispatchFetchComments: (data) => dispatch(fetchCommentsRequest(data)),
-        dispatchUpvoteComment: (data) => dispatch(upVoteCommentRequest(data)),
-        dispatchDownvoteComment: (data) => dispatch(downVoteCommentRequest(data)),
         dispatchEditComment: (data) => dispatch(editCommentRequest(data)),
-        dispatchDeleteComment: (data) => dispatch(deleteCommentRequest(data)),
         dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
     }
 }
