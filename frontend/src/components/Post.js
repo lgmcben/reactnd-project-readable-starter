@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { upVoteRequest,
          downVoteRequest,
-         deletePostRequest,
-         editPostRequest } from '../actions'
+         deletePostRequest } from '../actions'
 
 class Post extends Component {
     render() {
@@ -27,7 +26,7 @@ class Post extends Component {
                     - Downvote
                 </button>
 
-                <button className='button-control' onClick={() => this.openEditPostModal(this.props.post.id, this.props.post.title, this.props.post.body)}>
+                <button className='button-control' onClick={() => this.props.openEditPostModal(this.props.post.id, this.props.post.title, this.props.post.body)}>
                     Edit
                 </button>
 
@@ -44,7 +43,6 @@ function mapDispatchToProps (dispatch) {
         dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
         dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
         dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
-        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
     }
 }
 

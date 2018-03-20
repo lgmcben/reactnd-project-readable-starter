@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
 import { fetchAllPostsRequest,
          addNewPostRequest,
+         editPostRequest,
          fetchCategoriesRequest,
          sortByScoreAsc,
          sortByScoreDesc } from '../actions'
@@ -135,7 +136,7 @@ class PostList extends Component {
                             return true;
                         }
                     }).map(post =>
-                            <Post post={post} key={post.id}/>
+                            <Post post={post} key={post.id} openEditPostModal={this.openEditPostModal}/>
                     )}
                 </ul>
                 <button onClick={() => this.openNewPostModal()}>New post</button>
@@ -245,12 +246,9 @@ function mapDispatchToProps (dispatch) {
         dispatchLoadAllPost: (data) => dispatch(fetchAllPostsRequest(data)),
         dispatchAddNewPost: (data) => dispatch(addNewPostRequest(data)),
         dispatchFetchCategories: (data) => dispatch(fetchCategoriesRequest(data)),
-        dispatchUpvote: (data) => dispatch(upVoteRequest(data)),
-        dispatchDownvote: (data) => dispatch(downVoteRequest(data)),
-        dispatchDeletePost: (data) => dispatch(deletePostRequest(data)),
-        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
         dispatchSortByScoreAsc: () => dispatch(sortByScoreAsc()),
         dispatchSortByScoreDesc: () => dispatch(sortByScoreDesc()),
+        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
     }
 }
 
