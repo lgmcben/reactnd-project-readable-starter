@@ -16,8 +16,8 @@ function fetchPost (id) {
 }
 
 function fetchPostList () {
-    const postListUrl = `${SERVER_URL}/posts`;
-    return fetch(postListUrl, {
+    const url = `${SERVER_URL}/posts`;
+    return fetch(url, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'benkittitoken',
@@ -29,21 +29,21 @@ function fetchPostList () {
 }
 
 function fetchCategories () {
-  const postListUrl = `${SERVER_URL}/categories`;
-  return fetch(postListUrl, {
-              method: 'GET',
-              headers: {
-                  'Authorization': 'benkittitoken',
-                  'Content-Type': 'application/json'
-              },
-         })
-         .then((response) => response.json())
-         .then((responseJson) => responseJson.categories);
+    const url = `${SERVER_URL}/categories`;
+    return fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson.categories);
 }
 
 function fetchComments (postId) {
-    const commentsUrl = `${SERVER_URL}/posts/${postId}/comments`;
-    return fetch(commentsUrl, {
+    const url = `${SERVER_URL}/posts/${postId}/comments`;
+    return fetch(url, {
       method: 'GET',
       headers: {
           'Authorization': 'benkittitoken',
@@ -51,10 +51,7 @@ function fetchComments (postId) {
       },
     })
     .then(response => response.json())
-    .then(responseJson => {
-      console.log('fetchComments', responseJson);
-      return responseJson;
-    });
+    .then(responseJson => responseJson);
 }
 
 function submitNewPost ({title = '', body = '', author = '', category = ''} = {}) {
@@ -76,14 +73,8 @@ function submitNewPost ({title = '', body = '', author = '', category = ''} = {}
                 },
                 body: requestBody
            })
-           .then((response) => {
-                console.log(response);
-                return response.json();
-            })
-           .then((responseJson) => {
-                console.log(responseJson);
-                return responseJson;
-           });
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function submitNewComment ({body = '', author = '', parentId = ''} = {}) {
@@ -104,60 +95,42 @@ function submitNewComment ({body = '', author = '', parentId = ''} = {}) {
                 },
                 body: requestBody
            })
-           .then((response) => {
-                console.log(response);
-                return response.json();
-            })
-           .then((responseJson) => {
-                console.log(responseJson);
-                return responseJson;
-           });
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function vote ({id = undefined, option = ''} = {}) {
-  const url = `${SERVER_URL}/posts/${id}`;
-  const requestBody = JSON.stringify({
-     option: option
-  })
-  return fetch(url, {
-              method: 'POST',
-              headers: {
-                  'Authorization': 'benkittitoken',
-                  'Content-Type': 'application/json'
-              },
-              body: requestBody
-         })
-         .then((response) => {
-              console.log(response);
-              return response.json();
-          })
-         .then((responseJson) => {
-              console.log('vote(), responseJson = ', responseJson);
-              return responseJson;
-         });
+    const url = `${SERVER_URL}/posts/${id}`;
+    const requestBody = JSON.stringify({
+       option: option
+    })
+    return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function voteComment ({id = undefined, option = ''} = {}) {
-  const url = `${SERVER_URL}/comments/${id}`;
-  const requestBody = JSON.stringify({
-     option: option
-  })
-  return fetch(url, {
-              method: 'POST',
-              headers: {
-                  'Authorization': 'benkittitoken',
-                  'Content-Type': 'application/json'
-              },
-              body: requestBody
-         })
-         .then((response) => {
-              console.log(response);
-              return response.json();
-          })
-         .then((responseJson) => {
-              console.log('voteComment(), responseJson = ', responseJson);
-              return responseJson;
-         });
+    const url = `${SERVER_URL}/comments/${id}`;
+    const requestBody = JSON.stringify({
+       option: option
+    })
+    return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function editPost ({id='', title = '', body = ''} = {}) {
@@ -174,14 +147,8 @@ function editPost ({id='', title = '', body = ''} = {}) {
                 },
                 body: requestBody
            })
-           .then((response) => {
-                console.log(response);
-                return response.json();
-            })
-           .then((responseJson) => {
-                console.log('editPost(), responseJson = ', responseJson);
-                return responseJson;
-           });
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function editComment ({id='', timestamp, body = ''} = {}) {
@@ -198,69 +165,49 @@ function editComment ({id='', timestamp, body = ''} = {}) {
                 },
                 body: requestBody
            })
-           .then((response) => {
-                console.log(response);
-                return response.json();
-            })
-           .then((responseJson) => {
-                console.log('editComment(), responseJson = ', responseJson);
-                return responseJson;
-           });
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function deletePost (id) {
-  const url = `${SERVER_URL}/posts/${id}`;
-  return fetch(url, {
-              method: 'DELETE',
-              headers: {
-                  'Authorization': 'benkittitoken',
-                  'Content-Type': 'application/json'
-              }
-         })
-         .then((response) => {
-              console.log(response);
-              return response.json();
-          })
-         .then((responseJson) => {
-              console.log('deletePost(), responseJson = ', responseJson);
-              return responseJson;
-         });
+    const url = `${SERVER_URL}/posts/${id}`;
+    return fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                }
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
 function deleteComment (id) {
-  const url = `${SERVER_URL}/comments/${id}`;
-  return fetch(url, {
-              method: 'DELETE',
-              headers: {
-                  'Authorization': 'benkittitoken',
-                  'Content-Type': 'application/json'
-              }
-         })
-         .then((response) => {
-              console.log(response);
-              return response.json();
-          })
-         .then((responseJson) => {
-              console.log('deleteComment(), responseJson = ', responseJson);
-              return responseJson;
-         });
+    const url = `${SERVER_URL}/comments/${id}`;
+    return fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'benkittitoken',
+                    'Content-Type': 'application/json'
+                }
+           })
+           .then((response) => response.json())
+           .then((responseJson) => responseJson);
 }
 
-
-
 export {
+    deleteComment,
+    deletePost,
+    editComment,
+    editPost,
+    fetchCategories,
+    fetchComments,
     fetchPost,
     fetchPostList,
-    submitNewPost,
-    fetchCategories,
-    vote,
-    editPost,
-    deletePost,
-    fetchComments,
-    voteComment,
-    editComment,
-    deleteComment,
     submitNewComment,
+    submitNewPost,
+    vote,
+    voteComment,
     UPVOTE,
     DOWNVOTE
 }

@@ -27,16 +27,16 @@
   margin-right: 15px;
 }
 
+.comment-container {
+  margin-left: 100px;
+}
+
 .post {
   margin-bottom: 50px;
 }
 
 .warning {
   color: red;
-}
-
-.comment-container {
-  margin-left: 100px;
 }
 
 @keyframes App-logo-spin {
