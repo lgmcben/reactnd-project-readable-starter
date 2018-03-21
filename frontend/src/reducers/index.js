@@ -1,18 +1,18 @@
 import {
-    LOAD_ALL_POSTS_SUCCESS,
-    FETCH_SINGLE_POST_SUCCESS,
+    ADD_NEW_COMMENT_SUCCESS
     ADD_NEW_POST_SUCCESS,
-    FETCH_CATEGORIES_SUCCESS,
-    VOTE_SUCCESS,
+    DELETE_COMMENT_SUCCESS,
     DELETE_POST_SUCCESS,
+    EDIT_COMMENT_SUCCESS,
     EDIT_POST_SUCCESS,
+    FETCH_CATEGORIES_SUCCESS,
+    FETCH_COMMENTS_SUCCESS,
+    FETCH_SINGLE_POST_SUCCESS,
+    LOAD_ALL_POSTS_SUCCESS,
     SORT_BY_SCORE_ASC,
     SORT_BY_SCORE_DESC,
-    FETCH_COMMENTS_SUCCESS,
     VOTE_COMMENT_SUCCESS,
-    EDIT_COMMENT_SUCCESS,
-    DELETE_COMMENT_SUCCESS,
-    ADD_NEW_COMMENT_SUCCESS
+    VOTE_SUCCESS,
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -24,6 +24,21 @@ const initialState = {
 
 function comment (state = {}, action) {
     switch (action.type) {
+        case ADD_NEW_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: [...state.comments, action.newComment]
+            };
+        case DELETE_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: state.comments.filter(comment => comment.id !== action.deletedComment.id)
+            }
+        case EDIT_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: state.comments.map(comment => comment.id === action.editedComment.id ? action.editedComment : comment)
+            }
         case FETCH_COMMENTS_SUCCESS:
             return {
                 ...state,
@@ -34,21 +49,6 @@ function comment (state = {}, action) {
                 ...state,
                 comments: state.comments.map(comment => comment.id === action.comment.id ? action.comment : comment)
             }
-        case EDIT_COMMENT_SUCCESS:
-            return {
-                ...state,
-                comments: state.comments.map(comment => comment.id === action.editedComment.id ? action.editedComment : comment)
-            }
-        case DELETE_COMMENT_SUCCESS:
-            return {
-                ...state,
-                comments: state.comments.filter(comment => comment.id !== action.deletedComment.id)
-            }
-        case ADD_NEW_COMMENT_SUCCESS:
-            return {
-                ...state,
-                comments: [...state.comments, action.newComment]
-            };
         default:
             return state;
     }
@@ -56,29 +56,12 @@ function comment (state = {}, action) {
 
 function post (state = initialState, action) {
     switch (action.type) {
-        case FETCH_SINGLE_POST_SUCCESS:
-            return {
-                ...state,
-                postDetail: action.postDetail
-            }
-        case LOAD_ALL_POSTS_SUCCESS:
-            return {
-                ...state,
-                postList: action.allPosts
-            };
         case ADD_NEW_POST_SUCCESS:
             console.log('add new post reducer');
             return {
                 ...state,
                 postList: [...state.postList, action.newPost]
             };
-        case VOTE_SUCCESS:
-            return {
-                ...state,
-                postList: state.postList.map(post => post.id === action.post.id ? action.post : post),
-                postDetail: action.post
-
-            }
         case DELETE_POST_SUCCESS:
             return {
                 ...state,
@@ -90,6 +73,24 @@ function post (state = initialState, action) {
                 ...state,
                 postList: state.postList.map(post => post.id === action.editedPost.id ? action.editedPost : post),
                 postDetail: action.editedPost
+            }
+        case FETCH_SINGLE_POST_SUCCESS:
+            return {
+                ...state,
+                postDetail: action.postDetail
+            }
+        case LOAD_ALL_POSTS_SUCCESS:
+            return {
+                ...state,
+                postList: action.allPosts
+            };
+
+        case VOTE_SUCCESS:
+            return {
+                ...state,
+                postList: state.postList.map(post => post.id === action.post.id ? action.post : post),
+                postDetail: action.post
+
             }
         case SORT_BY_SCORE_ASC:
             return {
