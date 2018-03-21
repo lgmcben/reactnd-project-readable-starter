@@ -10,13 +10,8 @@ import { fetchAllPostsRequest,
          sortByScoreDesc } from '../actions'
 
 import Post from './Post'
-// ben temp
-import * as PostAPIUtil from '../utils/api';
-//import Loading from 'react-loading'
-
 
 class PostList extends Component {
-
     state = {
         newPostModalOpen: false,
         editPostModalOpen: false,
@@ -70,7 +65,6 @@ class PostList extends Component {
             this.setState({ warning: 'Invalid input. Please try again.'});
             return
         }
-        //console.log('selected category', this.state.newPostCategory);
         this.props.dispatchAddNewPost({title: this.state.newPostTitle, body: this.state.newPostBody, author: this.state.newPostAuthor, category: this.state.newPostCategory});
         this.closeNewPostModal();
     }
@@ -92,7 +86,6 @@ class PostList extends Component {
     }
 
     render() {
-        console.log('Props', this.props);
         const { newPostModalOpen, editPostModalOpen } = this.state;
         return (
             <div>
@@ -103,6 +96,7 @@ class PostList extends Component {
                     &nbsp;
                     &nbsp;
                 </span>
+
                 {this.props.categoryList && this.props.categoryList.map(category =>
                     <span key={category.path}>
                         <Link to={`/${category.path}`}>
@@ -127,16 +121,19 @@ class PostList extends Component {
                 <br/>
 
                 <p>Current category: {this.props.match.params.category ? this.props.match.params.category : 'All'}</p>
+
                 <br/>
-                    {this.props.postList.filter(post => {
-                        if(this.props.match.params.category){
-                            return post.category === this.props.match.params.category;
-                        }else{
-                            return true;
-                        }
-                    }).map(post =>
-                            <Post post={post} key={post.id} openEditPostModal={this.openEditPostModal} titleLinksToDetail={true}/>
-                    )}
+
+                {/* Show only posts in selected category */}
+                {this.props.postList.filter(post => {
+                    if(this.props.match.params.category){
+                        return post.category === this.props.match.params.category;
+                    }else{
+                        return true;
+                    }
+                }).map(post =>
+                        <Post post={post} key={post.id} openEditPostModal={this.openEditPostModal} titleLinksToDetail={true}/>
+                )}
 
                 <button onClick={() => this.openNewPostModal()}>New post</button>
 
@@ -173,25 +170,16 @@ class PostList extends Component {
                         <br/>
                         <select value={this.state.newPostCategory} onChange={(event) => this.setState({newPostCategory: event.target.value})}>
                             <option default>Select category</option>
-
                             {this.props.categoryList && this.props.categoryList.map(category =>
                                 <option key={category.path} value={category.name}>{category.name}</option>
                             )}
                         </select>
-
-
                         <button onClick={this._submitNewPost}>
                             Submit
                         </button>
-
                         {this.state.warning && <p className='warning'>{this.state.warning}</p>}
-
                     </div>
-
                 </Modal>
-
-
-
 
                 <Modal
                     isOpen={editPostModalOpen}
@@ -219,15 +207,9 @@ class PostList extends Component {
                         <button onClick={this._submitEditPost}>
                             Submit
                         </button>
-
                         {this.state.warning && <p className='warning'>{this.state.warning}</p>}
-
                     </div>
-
                 </Modal>
-
-
-
             </div>
         );
     }
