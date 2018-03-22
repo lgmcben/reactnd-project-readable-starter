@@ -10,6 +10,7 @@ import {  addNewCommentRequest,
 
 import Comment from './Comment';
 import Post from './Post';
+import PostNotFound from './PostNotFound';
 
 class PostDetail extends Component{
     state = {
@@ -115,7 +116,7 @@ class PostDetail extends Component{
     render() {
         const post = this.props.postDetail;
         const { editPostModalOpen, editCommentModalOpen, newCommentModalOpen } = this.state;
-        if(post && !post.deleted){
+        if(post && post.id){
             return(
                 <div>
                     <button onClick={this.navigateBack}>
@@ -132,7 +133,7 @@ class PostDetail extends Component{
                     <div className='comment-container'>
                     {this.props.comments && this.props.comments.map(comment =>
                         (
-                            <Comment comment={comment} openEditCommentModal={this.openEditCommentModal}/>
+                            <Comment key={comment.id} comment={comment} openEditCommentModal={this.openEditCommentModal}/>
                         )
                     )}
                     </div>
@@ -224,12 +225,13 @@ class PostDetail extends Component{
                     </Modal>
                 </div>
             )
-        } else if (!post){
+        } else if (!post) {
             return (
-                <div>
-                    <p>404 post not found or is deleted</p>
-                    <Link to='/'>Back to post list</Link>
-                </div>
+                <PostNotFound />
+            )
+        } else if (post && !post.id) {
+            return (
+                <PostNotFound />
             )
         }
     }
