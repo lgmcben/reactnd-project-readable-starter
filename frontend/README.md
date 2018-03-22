@@ -1,4 +1,4 @@
-Launching application:
+How to launch application:
 
 1. Install and start the API server
 - cd api-server
