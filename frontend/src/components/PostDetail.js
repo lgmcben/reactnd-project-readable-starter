@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import {  addNewCommentRequest,
+          editCommentRequest,
+          editPostRequest,
           fetchCommentsRequest,
           fetchSinglePostRequest } from '../actions';
 
@@ -245,6 +247,8 @@ function mapDispatchToProps (dispatch) {
         dispatchAddNewComment: (data) => dispatch(addNewCommentRequest(data)),
         dispatchFetchComments: (data) => dispatch(fetchCommentsRequest(data)),
         dispatchFetchSinglePost: (data) => dispatch(fetchSinglePostRequest(data)),
+        dispatchEditPost: (data) => dispatch(editPostRequest(data)),
+        dispatchEditComment: (data) => dispatch(editCommentRequest(data))
     }
 }
 
